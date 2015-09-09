@@ -34,4 +34,16 @@ Exercice 3
 		if [ $opt="r" ]
 		then
 			cat $1.r1 $2.r1 | p2 > $3
-			
+		fi
+		if [ $opt="c" ]
+		then
+			cat $1.r1 $2.r1 | p2 >> $3
+		fi
+		if [ $opt="a" ]
+		then
+			rm -rf $1.r1
+			rm -rf $2.r1
+		fi
+	fi
+
+Pas fini...
