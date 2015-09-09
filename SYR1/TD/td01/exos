@@ -1,0 +1,37 @@
+Exercice 1
+
+	cat > f5
+	- 5 2 3 -1 ^D
+	cat f5 f4 > f6
+	cat ../dupond/f1 >> f6
+	cat ../dupond/f2 > f7
+
+Exercice 2
+
+	!# /bin/sh
+	p1 < $1 > $1.r1
+	p1 < $2 > $2.r1
+	cat $1.r1 $2.r1 | p2 > $3
+
+	Appelée dans dupond, cette commande fait ses traitements dans fich1.r1 et ../durand/fich2.r1, puis concatène les résultats dans fichr.
+
+	!# /bin/sh
+	echo "Entrez deux fichiers sources et le nom du destinataire :"
+	read n1 n2 n3
+	...
+
+Exercice 3
+
+	!# /bin/sh
+	echo "Nom du répertoire destinataire :"
+	read rep
+	p1 < $1 > $1.r1
+	p1 < $2 > $2.r1
+	if [ -f $rep/$3 ]
+	then
+		echo "$rep/$3 existe déjà. (r)emplacer, (c)oncaténer ou (a)nnuler ?"
+		read opt
+		if [ $opt="r" ]
+		then
+			cat $1.r1 $2.r1 | p2 > $3
+			

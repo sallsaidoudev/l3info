@@ -1,0 +1,19 @@
+Exercice 1
+
+	public class MaxConsSubString {
+
+		public static void main(String[] args) {
+			String str = args[0];
+			int j, i = 0;
+			for(j=0; j<str.length(); ++j) {
+				char c = str.charAt(j);
+				if("AEIOUaeiou".indexOf(c) != -1) {
+					if (j > i) System.out.print('"' + str.substring(i, j) + "#\" ");
+					i = j + 1;
+				}
+			}
+			if (j > i) System.out.print('"' + str.substring(i, j) + "#\" ");
+			System.out.println();
+		}
+
+	}

@@ -1,0 +1,19 @@
+Exercice 1
+
+	n = 5
+	t1 -> [1 2 3 4 7] <- ta
+	t2 -> [2 3 5 6 7] <- tb
+	t3 -> [] <- tc
+
+Exercice 2
+
+	public static int recherche(int x, int taille, int[] tab) {
+		for(int i=0; i<taille; ++i)
+			if(tab[i] == x) return i;
+		return -1;
+
+		// OU
+		
+		for(int i=taille-1; i>=0 && tab[i]!=x; --i);
+		return i;
+	}
