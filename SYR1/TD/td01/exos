@@ -34,16 +34,26 @@ Exercice 3
 		if [ $opt="r" ]
 		then
 			cat $1.r1 $2.r1 | p2 > $3
+			exit
 		fi
 		if [ $opt="c" ]
 		then
 			cat $1.r1 $2.r1 | p2 >> $3
+			exit
 		fi
 		if [ $opt="a" ]
 		then
 			rm -rf $1.r1
 			rm -rf $2.r1
+			exit
 		fi
-	fi
+		echo "Option invalide."
 
-Pas fini...
+	Améliorations possibles (gestion des erreurs, boucle d'interprétation...).
+
+Exercice 4
+	
+	1 - Revient à faire ./tp2 < f_in > tp2.out.
+	2 - Renvoie les lignes de tous les fichiers de /var/log qui contiennent l'URL donnée.
+	3 - Donne au groupe 'others' le droit de lecture sur ./rc.conf.
+	4 - Trouve tous les fichiers portant l'extension .html dans /usr/local.
