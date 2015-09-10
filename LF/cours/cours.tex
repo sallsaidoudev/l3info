@@ -1,0 +1,78 @@
+\documentclass[a4paper]{article}
+
+\input{../../../tex/header.tex}
+
+\title{Langages Formels}
+\author{Anne Grazon -- L3 Info Rennes 1}
+\date{2015 -- 2016, S1}
+
+\begin{document}
+
+\maketitle
+
+% 10/09/15
+\section{Monoïdes libres, langages}
+
+\subsection{Monoïdes}
+
+La théorie des langages est née dans les années 60 de la volonté des linguistes de formaliser la notion de grammaire (des langages naturels). Parmi eux, Noam Chomsky a défini quatre types de grammaires associées à quatre types de langages (type 0, 1, 2 et 3). Dans ce cours, nous étudierons les langages algébriques (type 2) et rationnels (type 3).
+
+\begin{defi}Quelques définitions :
+\begin{enumerate}
+	\item Alphabet --- Ensemble $\Sigma$ fini non vide de symboles, appelés lettres.
+	\item Mot sur $\Sigma$ --- Suite finie de lettres. On définit sa longueur $|u| = n$.
+	\item Le mot vide est noté $\epsilon$ ou $1_\Sigma$, $|1_\Sigma| = 0$.
+	\item $\Sigma^*$ désigne l'ensemble de tous les mots sur $\Sigma$.
+	\item La loi de composition interne sur $\Sigma^*$ notée $\cdot$ est la concaténation, qui est associative et admet $1_\Sigma$ comme élément neutre.
+	\item Et ça, c'est un monoïde.
+\end{enumerate}
+\end{defi}
+
+\begin{defi}
+Un monoïde est dit libre lorsque la décomposition d'un élément quelconque en ``éléments de base" suivant sa loi de composition, est unique. $\Sigma^*$ est alors le monoïde libre engendré par $\Sigma$.
+\end{defi}
+
+\begin{rem}
+On voit immédiatement que deux mots sont égaux si et seulement si ils sont de même longueur, et ont leur lettres égales deux à deux. Cette propriété caractérise les monoïdes libres.
+\end{rem}
+
+\begin{defi}
+$v$ est un facteur de $u \Leftrightarrow \exists \alpha, \beta \in \Sigma^*, u=\alpha v\beta$ ; c'est un facteur droit (resp. gauche) si $\beta=1_\Sigma$ (resp. si $\alpha=1_\Sigma$). C'est un facteur propre si $v\neq u$ et $v\neq 1_\Sigma$.
+\end{defi}
+
+\begin{defi}
+Pour $x\in\Sigma$, $|\cdot|_x$ est le nombre d'occurrences de $x$ dans un mot ; on définit de même le nombre d'occurrences d'un mot dans un autre.
+\end{defi}
+
+\subsection{Langages}
+
+Un langage est un ensemble quelconque de mots ($L\subseteq\Sigma^*$, $L\in\mathcal{P}(\Sigma^*)$). L'union, l'intersection et le complémentaire sont définis intuitivement sur les langages.
+
+\begin{defi}
+Les autres opérations usuelles sont le produit $L\cdot M = \{uv|u\in L\textnormal{ et }v\in M\}$, l'étoile de Kleene $L^*=\cup_{n\geqslant 0}L^n$ et l'étoile propre $L^+=L^*\setminus L^0$.
+\end{defi}
+
+
+\section{Grammaires algébriques}
+
+\begin{defi}
+Une grammaire est un quadruplet $G=(\Sigma,V,S,P)$ où $\Sigma$ est l'alphabet terminal, $V$ disjoint de $\Sigma$ l'alphabet des non-terminaux, $S\in V$ l'axiome de $G$ et $P\subsetneq V\times (X\cup V)^*$ l'ensemble des règles de production.
+\end{defi}
+
+\begin{ex}$G_1 = (\Sigma, V, S, P)$ avec $\Sigma=\{a,b\}$, $V=\{S,T\}$ et les règles de production $P\rightarrow aSb+aT$, $T\rightarrow b$.\end{ex}
+
+\begin{defi}
+Une grammaire est dite linéaire (resp. à droite et à gauche) si $P\subset V\times(\Sigma^*\times V\times\Sigma^*\cup\Sigma^*)$ (resp. $\Sigma^*\times V$ and so on).
+\end{defi}
+
+\begin{ex}$G_1$ est linéaire.\end{ex}
+
+La dérivation consiste à engendrer un mot à partir d'un autre en suivant une règle de production. Elle est notée $\rightarrow$, sa fermeture réflexive $\rightarrow^*$ et une dérivation à l'ordre $n$, $\rightarrow^n$.
+
+\begin{defi}
+Le langage engendré par une grammaire est $L(G) = \{f\in\Sigma^* | S\rightarrow^*f\}$ (le langage élargi accepte aussi $V^*$). Réciproquement, un langage est dit algébrique s'il existe une grammaire $G$ telle que $L=L(G)$.
+\end{defi}
+
+\begin{ex}$L(G_1)=\{a^nb^n | n\geqslant1\}$\end{ex}
+
+\end{document}

@@ -1,0 +1,4 @@
+# Latex crap
+*.aux
+*.log
+*.synctex.gz
