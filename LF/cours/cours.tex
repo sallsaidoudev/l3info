@@ -73,6 +73,34 @@ La dérivation consiste à engendrer un mot à partir d'un autre en suivant une 
 Le langage engendré par une grammaire est $L(G) = \{f\in\Sigma^* | S\rightarrow^*f\}$ (le langage élargi accepte aussi $V^*$). Réciproquement, un langage est dit algébrique s'il existe une grammaire $G$ telle que $L=L(G)$.
 \end{defi}
 
+\rem{Pour prouver qu'une grammaire engendre un langage, on doit donc vérifier deux inclusions.}
+
 \begin{ex}$L(G_1)=\{a^nb^n | n\geqslant1\}$\end{ex}
+
+% 14/09 faut aller en cours léo...
+La famille des langages algébriques sur un alphabet $\Sigma$ est notée $\textsl{Alg}(\Sigma^*)$.
+
+\begin{lem}
+Lemme fondamental : soit $G$ une grammaire, $f\in(\Sigma\cup V)^*$. Si $f$ se factorise en $f_0S_1f_1...S_kf_k$ où $f_i\in\Sigma^*$ et $S_i\in V$, alors pour tout $g\in(\Sigma\cup V)^*$, $$f\rightarrow^*g \Leftrightarrow g=f_0h_1f_1...h_kf_k \textnormal{ et }\forall i S_i\rightarrow^*h_i$$
+Plus précisément, $f\rightarrow^ng$ si idem et $\forall i S_i\rightarrow^{n_i}h_i$ avec $\sum n_i = n$.
+\end{lem}
+
+\begin{prop}
+Principe de récurrence : soit $S\subset\mathbb{N}$ telle que $0\in S$ et $\forall n, n\in S \Rightarrow n+1\in S$. Alors $S=\mathbb{N}$.
+\end{prop}
+
+\rem{En appliquant ce principe à une propriété $\mathcal{P}(n)$ pour $n$ entier, on peut démontrer des trucs. Il existe aussi la version dite forte de la récurrence.}
+
+\begin{defi}
+$A$ est un arbre de dérivation pour une grammaire $G$ si les étiquettes de $A$ sont dans $\Sigma\cup V\cup\{\epsilon\}$, les $\epsilon$ n'ont pas de frères et les n\oe uds $E$ de fils $e_1,...,e_n$ sont tels que $E\rightarrow e_1,...,e_n$ est une règle de production de $G$.
+\end{defi}
+
+\rem{Les n\oe uds internes sont donc nécessairement étiquetés dans $V$.}
+
+\begin{defi}
+Une grammaire est ambiguë si elle génère des mots qui possèdent plusieurs arbres de dérivation distincts.
+\end{defi}
+
+On peut choisir de dériver à gauche ou à droite pour gérer l'ambiguïté.
 
 \end{document}

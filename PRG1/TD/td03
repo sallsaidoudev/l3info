@@ -1,0 +1,35 @@
+Exercice 1
+
+	class Base {
+		private double i;
+		private double c;
+		Base() { i = 0; c = 0; }
+		Base(double _i, double _c) { i = _i; c = _c; }
+		public Base clone() { return new Base(i, c); }
+		public boolean equals(Base b) { return i == b.i && c == b.c; }
+		public String toString() { return String.format("<%.2f,%.2f>", i, c); }
+	}
+
+	class Haut {
+		...
+	}
+
+Exercice 2
+
+	public int nb_base(Haut[] tab, Base b) {
+		int count = 0;
+		for(int i=0; i<tab.length; ++i)
+			if(tab[i].b.equals(b)) ++count;
+		return count;
+	}
+
+Exercice 3
+
+	1. a) oui, b) non (private), c) non (idem), d) oui, e) faux, f) non (absurde), g) non, h) faux,
+	i) oui, j) non, k) oui, l) non, m) oui mais pas bien, n) oui
+
+	2. a) oui, b) oui, c) oui
+
+	3. a) oui
+
+	4. a) oui, b) non, c) non car pas d'objet instancié

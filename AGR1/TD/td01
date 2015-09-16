@@ -1,0 +1,44 @@
+Exercice 1
+
+	Les segments sont les arêtes de nos graphes, et les zones qu'ils délimitent (y compris l'extérieur) ses sommets. On voit alors que le premier compte trois sommets de degré impair, et le deuxième seulement deux ; d'après le théorème d'Euler, on peut tracer une ligne continue coupant une seule fois chaque segment dans le deuxième cas uniquement.
+
+Exercice 2
+
+	On considère le graphe de sommets les variables ; un arc relie deux sommets s'ils sont dans la même inéquation. La solution au problème de maximisation consiste alors miraculeusement à mettre à 1 les variables du plus grand stable de ce graphe ; S = (0, 1, 1, 0, 1).
+
+Exercice 3
+
+	Voir feuille dégueu.
+
+Exercice 4
+
+	Go chercher Graphe de Bruijn sur Google puis suivre un cycle eulérien : 0001110100 (non unicité).
+
+Exercice 5
+
+1.	Matrice d'adjacence :
+	0 1 0 1 0 0
+	0 0 0 0 1 0
+	0 0 0 0 1 1
+	0 1 0 0 0 0
+	0 0 0 1 0 0
+	0 0 0 0 0 0
+
+	Matrice d'incidence :
+	+1 +1  0  0  0  0  0
+	-1  0 -1 +1  0  0  0
+	 0  0  0  0  0 +1 +1
+	 0 -1 +1  0 -1  0  0
+	 0  0  0 -1 +1 -1  0
+	 0  0  0  0  0  0 -1
+
+	Liste des successeurs :
+	1: 2 4, 2: 5, 3: 5 6, 4: 2, 5: 4, 6: v
+
+2.	Initialiser Pred
+	Pour i, l dans Succ:
+		Pour j dans l:
+			Ajouter(Pred[j], i)
+	Renvoyer Pred
+
+	Cet algorithme s'exécute en O(|G|^2) dans le pire des cas ; souvent il est beaucoup plus efficace (contrairement à un algorithme sur les matrices d'adjacence).

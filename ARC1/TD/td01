@@ -1,0 +1,88 @@
+Algèbre de Boole
+================
+
+Exercice 1
+
+	Paul va au cinéma si P + (!P.I).
+	a) Si le film est intéressant, Paul va au cinéma dans tous les cas.
+	b) P + (!P.I) = (P+!P) . (P+I) = P+I par distributivité et simplification d'une tautologie.
+
+Exercice 2
+
+	a) x+y = !!(x+y) = !(!x.!y)
+	b) x.y = !!(x.y) = !(!x+!y)
+
+Exercice 3
+
+	a) f1 = x.y + !x.z
+	xyz 0 1
+	0 0   1
+	0 1   1
+	1 1 1 1
+	1 0 
+
+	b) f2 = !y.z + x.!z + z.t
+    z/t 0 0 1 1
+	x y 0 1 1 0
+	0 0     1 1
+	0 1     1
+	1 1 1 1 1
+	1 0 1 1 1 1
+
+Exercice 4
+
+	Table de la fonction demandée (X = xy, Y = zt) :
+	z/t 0 0 1 1
+	x y 0 1 1 0
+	0 0 1   -  
+	0 1 1 1 -
+	1 1 - - - -
+	1 0 1 1 - 1
+	Donc sup(xy, zt) = x.!y + !z.!t + !x.y.!z.
+
+Exercice 5
+
+	c/d 0 0 1 1
+	a b 0 1 1 0
+	0 0
+	0 1     1
+	1 1 1 1 1 1
+	1 0   1 1 1
+	piscine = a.b + a.c + a.d + b.c.d
+
+Exercice 6
+
+	Une teinte est représentée sur deux bits soit T = xy. On réfléchit un peu et pouf.
+	neg(xy) = !(x+y), !(x.y)
+
+Exercice 7
+
+	Le OU logique correspond à 1 - (1-x)(1-y).
+
+Représentations et interprétations
+==================================
+
+Exercice 1
+
+	55 =_2 110111 =_10 55 =_16 37
+
+Exercice 2
+
+	a) 19, b) 27, b) 100
+
+Exercice 3
+
+	a) 11111110, b) 100000011, c) 11100001001010
+
+Exercice 4
+
+	a) 00001100  IMP  11111111  IMP  01100100  01000000
+	b) 15  15  8  162  256
+
+Exercice 5
+
+	00000101  11111011  11111100  01111111  10000001  IMP  10000000  11111111
+
+Exercice 6
+
+	15  -113  -15  -64  -1
