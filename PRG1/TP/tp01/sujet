@@ -1,0 +1,9 @@
+PRG1 - TP01
+
+1.	Voir Boules.java.
+2. 	Le premier jeu est trié, le deuxième pas complètement. C'est buggé.
+3.	Le débuggage à la sauvage marche aussi.
+4.	Il fallait changer la condition d'arrêt du while pour "s <= t", en accord avec les invariants proposés dans l'énoncé. Le second jeu passe
+	alors, mais pas le troisième. Il faut maintenant enlever l'incrémentation de s dans le cas 'r' du switch. L'algorithme est enfin correct.
+5.	On peut prendre le nombre de boules souhaité en entrée, ou les récupérer dans une ArrayList par exemple.
+6.	Il suffit de prendre en compte l'arrivée d'une caractère '\n' et de réagir en conséquence.

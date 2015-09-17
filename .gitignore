@@ -2,3 +2,6 @@
 *.aux
 *.log
 *.synctex.gz
+
+# Java crap
+*.java~
