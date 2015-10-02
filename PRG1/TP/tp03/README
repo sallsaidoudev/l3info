@@ -1,0 +1,24 @@
+Pour compiler tout le TP :
+	
+	javac TP3.java
+
+Pour exécuter les tests :
+	
+	java TP3
+	java TP3 <file> pour tester l'insertion de paires à partir d'un fichier de données
+
+Tous les tests demandés ont volontairement été rassemblés dans la seule classe TP3, qui les
+exécute à la suite. Pour l'insertion de paires à partir d'un fichier, un jeu de test est
+donné dans le fichier "pairs".
+
+===
+
+Ce TP a premièrement été réalisé sans IDE et selon quelques particularités qui se sont révélées
+incompatibles avec les tests unitaires exhumés du répertoire L3MIAGE du share. Il a donc ensuite
+été un peu refactorisé, et ces tests intégrés (non sans heurts). Les commandes données plus haut
+sont toujours valides, et s'y ajoutent celles-ci pour compiler et exécuter les tests :
+	
+	javac -cp .:junit-4.12 fr/istic/prg1/tp3/test/TestRunner.java
+	java -cp .:junit-4.12:hamcrest-core-1.3 fr.istic.prg1.tp3.test.TestRunner
+
+(Note : les extensions .jar ont été supprimées pour ne pas froisser Gmail.)

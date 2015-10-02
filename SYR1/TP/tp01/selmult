@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ $# -ne 3 ]
+then
+	echo "syntax: selmult file"
+	exit
+fi
+
+while
+	echo "Index (0 to close): "
+	read i
+	[ $i -ne 0 ]
+do
+	echo $i | cat - $1 | share/prog2
+done

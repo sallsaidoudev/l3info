@@ -1,0 +1,30 @@
+Exercice 1
+
+1.	L'algorithme basé sur la numérotation postfixe lors d'un parcours en profondeur permet de résoudre
+	ce problème en O(n).
+2.	Voir sujet.
+3.	Les composantes fortement connexes sont A = {1, 2, 3, 4, 5, 9, 10, 15} et B = {6, 7, 8, 12, 13, 14}
+	et C = {11}.
+4.	Le nombre minimum de rues à inverser est 1 ; il y a alors 5 solutions possibles, qui correspondent
+	aux liaisons entre A et B. Dans le graphe original, toutes ces liaisons vont de B vers A, c'est
+	pourquoi il suffit d'en inverser une pour obtenir un plan acceptable (avec un cycle global entre
+	A, B et C).
+
+Exercice 2
+
+1.	Le dictionnaire des prédécesseurs est le dictionnaire des successeurs de G^{-1}, on applique
+	donc l'algorithme.
+2.	Voir sujet.
+3.	Voir sujet.
+
+Exercice 2bis
+
+1.	Il suffit de deux couleurs pour colorier un graphe biparti.
+2.	Un parcours en profondeur où on marque les sommets visités d'une étiquette selon la partition à
+	laquelle on veut les associer fonctionne ; pour un graphe non biparti, un conflit (aisément
+	détectable) sera rencontré.
+3.	Pour un graphe biparti, il est facile de montrer que tout cycle est de longueur paire. La réciproque
+	est plus complexe : il faudrait partitionner le graphe en suivant les cycles avec disjonction de cas
+	pour les sommets n'appartenant pas à un cycle.
+4.	A un sommet près, un tel graphe est biparti et peut être colorié avec deux couleurs. Il faut (et il
+	suffit) en rajouter une pour colorier le graphe original.

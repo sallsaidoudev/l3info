@@ -1,7 +1,12 @@
 # Latex crap
+*.out
 *.aux
 *.log
 *.synctex.gz
 
 # Java crap
 *.java~
+*.class
+
+# C crap
+*.o

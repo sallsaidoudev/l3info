@@ -1,10 +1,10 @@
 \documentclass[a4paper]{article}
 
-\input{../../../tex/header.tex}
-
 \title{Langages Formels}
 \author{Anne Grazon -- L3 Info Rennes 1}
 \date{2015 -- 2016, S1}
+
+\input{../../tex/les_header.tex}
 
 \begin{document}
 
@@ -31,10 +31,7 @@ La théorie des langages est née dans les années 60 de la volonté des linguis
 \begin{defi}
 Un monoïde est dit libre lorsque la décomposition d'un élément quelconque en ``éléments de base" suivant sa loi de composition, est unique. $\Sigma^*$ est alors le monoïde libre engendré par $\Sigma$.
 \end{defi}
-
-\begin{rem}
-On voit immédiatement que deux mots sont égaux si et seulement si ils sont de même longueur, et ont leur lettres égales deux à deux. Cette propriété caractérise les monoïdes libres.
-\end{rem}
+\rem{On voit immédiatement que deux mots sont égaux si et seulement si ils sont de même longueur, et ont leur lettres égales deux à deux. Cette propriété caractérise les monoïdes libres.}
 
 \begin{defi}
 $v$ est un facteur de $u \Leftrightarrow \exists \alpha, \beta \in \Sigma^*, u=\alpha v\beta$ ; c'est un facteur droit (resp. gauche) si $\beta=1_\Sigma$ (resp. si $\alpha=1_\Sigma$). C'est un facteur propre si $v\neq u$ et $v\neq 1_\Sigma$.
@@ -72,12 +69,11 @@ La dérivation consiste à engendrer un mot à partir d'un autre en suivant une 
 \begin{defi}
 Le langage engendré par une grammaire est $L(G) = \{f\in\Sigma^* | S\rightarrow^*f\}$ (le langage élargi accepte aussi $V^*$). Réciproquement, un langage est dit algébrique s'il existe une grammaire $G$ telle que $L=L(G)$.
 \end{defi}
-
 \rem{Pour prouver qu'une grammaire engendre un langage, on doit donc vérifier deux inclusions.}
 
 \begin{ex}$L(G_1)=\{a^nb^n | n\geqslant1\}$\end{ex}
 
-% 14/09 faut aller en cours léo...
+% 14/09
 La famille des langages algébriques sur un alphabet $\Sigma$ est notée $\textsl{Alg}(\Sigma^*)$.
 
 \begin{lem}
@@ -88,13 +84,11 @@ Plus précisément, $f\rightarrow^ng$ si idem et $\forall i S_i\rightarrow^{n_i}
 \begin{prop}
 Principe de récurrence : soit $S\subset\mathbb{N}$ telle que $0\in S$ et $\forall n, n\in S \Rightarrow n+1\in S$. Alors $S=\mathbb{N}$.
 \end{prop}
-
 \rem{En appliquant ce principe à une propriété $\mathcal{P}(n)$ pour $n$ entier, on peut démontrer des trucs. Il existe aussi la version dite forte de la récurrence.}
 
 \begin{defi}
 $A$ est un arbre de dérivation pour une grammaire $G$ si les étiquettes de $A$ sont dans $\Sigma\cup V\cup\{\epsilon\}$, les $\epsilon$ n'ont pas de frères et les n\oe uds $E$ de fils $e_1,...,e_n$ sont tels que $E\rightarrow e_1,...,e_n$ est une règle de production de $G$.
 \end{defi}
-
 \rem{Les n\oe uds internes sont donc nécessairement étiquetés dans $V$.}
 
 \begin{defi}
@@ -102,5 +96,30 @@ Une grammaire est ambiguë si elle génère des mots qui possèdent plusieurs ar
 \end{defi}
 
 On peut choisir de dériver à gauche ou à droite pour gérer l'ambiguïté.
+
+% 21/09
+\begin{prop}
+Si $L$ et $M$ sont algébriques, alors $L\cup M$ est algébrique. \'Etant données deux grammaires engendrant $L$ et $M$, on en construit une qui engendre $L\cup M$ par union des règles de production.
+\end{prop}
+
+Clôture des algébriques : $\textnormal{Alg}(X^*)$ est clos par union, produit et étoile mais pas par intersection ni complémentaire.
+
+
+\section{Automates finis}
+
+\begin{defi}
+Un automate fini est un quintuplet $A=(\Sigma,Q,q_0,F,\delta)$ où $\Sigma$ est l'alphabet d'entrée, $Q$ l'ensemble des état, $q_0\in Q$ l'état initial, $F\subseteq Q$ l'ensemble des états finals et $\delta\subseteq Q\times\Sigma\times Q$ l'ensemble des transitions.
+\end{defi}
+
+\begin{defi} Quelques définitions :\begin{itemize}
+  \item Un chemin est une suite de transitions cohérentes ; sa trace est la suite de ses étiquettes $(x_1,...,x_n)\in \Sigma^n$.
+  \item Un mot est reconnu par un automate s'il est la trace d'un chemin menant de l'état initial vers un état final.
+  \item Un langage est reconnaissable s'il existe un automate fini qui reconnaît tous ses mots.
+\end{itemize}\end{defi}
+\reml{Les langages vide et $\Sigma^*$ sont trivialement reconnaissables.}
+
+\begin{prop}
+La famille $\textnormal{Rec}(\Sigma^*)$ contient les parties finies de $\Sigma^*$ et est close par union (trivial suivant les définitions), produit et étoile.
+\end{prop}
 
 \end{document}

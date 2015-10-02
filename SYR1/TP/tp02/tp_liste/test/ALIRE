@@ -1,0 +1,22 @@
+Utilisation google_test
+------------------------------------
+
+1. Copier dans le répertoire de TP le répertoire /share/l3info/syr1/tp_liste/test ;
+   celui-ci contient 2 fichiers : test_unitaire_list.cc et Makefile
+
+2. Dans le répertoire test, exécuter la commande make : ceci va compiler les
+   fichiers puis démarrer le test, s'il n'y a pas d'erreur de compilation.
+
+Remarques : 
+
+ Dans le fichier de test fourni, vous trouverez : 
+ - des fonctions utilitaires
+ - deux exemples de fonctions de test
+ - des fonctions de test désactivées ( de corps vide).
+
+Pour tester votre programme, vous devrez écrire une fonction de test pour
+chaque situation à tester.
+
+Pour activer une fonction de test, il suffit de supprimer DISABLED_
+
+Documentation google_test : https://code.google.com/p/googletest/wiki/Documentation

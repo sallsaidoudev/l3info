@@ -1,0 +1,34 @@
+\documentclass[a4paper]{article}
+
+\input{../../../tex/les_header.tex}
+\newcommand{\ct}{\textnormal}
+\newcommand{\la}{\ct{a}}
+\newcommand{\lb}{\ct{b}}
+\newcommand{\blank}{\hspace*{3em}}
+
+\begin{document}
+
+\section*{LF -- TD 3}
+
+\paragraph{Exercice 3}~\\
+Montrer que $L=\{uv | u,v\in\Sigma^* \wedge |u| = |v| \wedge u\neq v\}$ est engendré par la grammaire $G$ suivante :\\
+$S\rightarrow AB|BA\\
+A\rightarrow aAa|aAb|bAa|bAb|a\\
+B\rightarrow aBa|aBb|bBa|bBb|b$
+
+Montrons que $L(G) \subset L$ :
+
+Soit $w\in L(G)$. D'après les règles de production, $\exists f,f',g,g' \in\Sigma^*$ tels que $w=faf'gbg'$ (ou $w=fbf'gag'$, et la démonstration est symétrique) avec $|f|=|f'|=n$ et $|g|=|g'|=p$.
+
+$w$ étant alors de longueur paire, soient $u$ et $v$ de même longueur tels que $w=uv=faf'gbg'$ ; on a $|w|=2n+2p+2$ et donc $|u|=|v|=n+p+1$. Ainsi, la lettre de $u$ en position $(n+1)$ est un $a$, alors que celle de $v$ à la même position est un $b$ : on a bien $u\neq v$ et donc $w\in L$.
+
+Réciproquement, pour $L \subset L(G)$, on dérive un mot de $L$ en s'appuyant sur la première lettre différente entre ses moitiés.
+
+\paragraph{Exercice 4}~\\
+1. $\epsilon, ab, aabb \in L_1=\{a^nb^n|n\geqslant 0\}$ ; $\epsilon, abab, abaabb \in L_2=L_1\cdot L_1$ ;\\
+$aabbababab, aaaaabbbbb, aaabbbaabb \in L_3=L_1^*$.
+
+2. $G_1 : S\rightarrow aSb|\epsilon$ ; $G_2 : S\rightarrow TT, T\rightarrow aTb|\epsilon$ ; $G_3 : S\rightarrow SS | T, T\rightarrow aSb|\epsilon$.
+
+3. et 4. La question précédente fournit les constructions de grammaires pour le produit et l'étoile de langages.
+\end{document}
