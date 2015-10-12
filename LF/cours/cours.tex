@@ -102,7 +102,7 @@ On peut choisir de dériver à gauche ou à droite pour gérer l'ambiguïté.
 Si $L$ et $M$ sont algébriques, alors $L\cup M$ est algébrique. \'Etant données deux grammaires engendrant $L$ et $M$, on en construit une qui engendre $L\cup M$ par union des règles de production.
 \end{prop}
 
-Clôture des algébriques : $\textnormal{Alg}(X^*)$ est clos par union, produit et étoile mais pas par intersection ni complémentaire.
+Clôture des algébriques : $\textnormal{Alg}(\Sigma^*)$ est clos par union, produit et étoile mais pas par intersection ni complémentaire.
 
 
 \section{Automates finis}
@@ -120,6 +120,29 @@ Un automate fini est un quintuplet $A=(\Sigma,Q,q_0,F,\delta)$ où $\Sigma$ est 
 
 \begin{prop}
 La famille $\textnormal{Rec}(\Sigma^*)$ contient les parties finies de $\Sigma^*$ et est close par union (trivial suivant les définitions), produit et étoile.
+\end{prop}
+
+% 28/09
+\begin{prop}
+Toute grammaire linéaire droite engendre un langage reconnaissable par un automate fini, et réciproquement.
+\end{prop}
+
+\begin{defi}
+Un automate $A$ est dit déterministe si $\forall q\in Q, \forall x\in \Sigma, \#\{q'\in Q | (q, x, q') \in \delta\} \leqslant 1$ et complet si $\geqslant 1$.
+\end{defi}
+\rem{Pour un automate déterministe complet, $\delta$ est une fonction totale de $Q\times\Sigma\rightarrow Q$ qui s'étend récursivement et intuitivement en $\hat{\delta}:Q\times\Sigma^*\rightarrow Q$.}
+\rem{Complétion d'automate : tout automate fini est équivalent à un automate complet qui peut se construire en ajoutant un état "puits" vers lequel on redirige toutes les transitions manquantes.}
+
+Clôture des reconnaissables : $\textnormal{Rec}(\Sigma^*)$ est clos par étoile (pour un automate donné, on renvoie vers l'état initial les transitions pointant vers un état final) et par intersection (pour deux automates, on construit l'automate des couples d'états, la fonction de transition étant inférée).
+
+\subsection{Lemme de l'étoile}
+\begin{lem}
+Soit $L$ un langage reconnaissable ; $\exists N$ tel que, $\forall w\in L, |w|\geqslant N$, il existe une factorisation de $w=xyz$ telle que $|x|>0$ et $\forall n, xy^nz\in L$.
+\end{lem}
+\rem{La preuve se construit à partir d'un automate, en posant $N = \#Q$.}
+
+\begin{prop}
+Le langage $\{a^nb^n|n\geqslant 0\}$ n'est pas reconnaissable.
 \end{prop}
 
 \end{document}
