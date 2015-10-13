@@ -11,10 +11,12 @@ class GameTree:
 		self.cursor += 1
 		self.log[self.cursor] = (coup, taken)
 
-	def cancel(self, board):
+	def cancel(self, board, noredo=False):
 		coup, taken = self.log[self.cursor]
 		board.move(coup.strip("TCFDR")[-2:] + coup.strip("TCFDR")[:2], log=False)
 		board[coup.strip("TCFDR")[-2:]] = taken
+		if noredo:
+			del self.log[self.cursor]
 		self.cursor -= 1
 
 	def redo(self, board):

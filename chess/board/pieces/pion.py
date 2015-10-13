@@ -30,7 +30,6 @@ class Pion(Piece):
 				moves.append(tuple(start))
 			# prises
 			for ofs in [-1, 1]:
-				if 0 <= front[0]+ofs and front[0]+ofs <= 8 and self.board[front[0]+ofs, front[1]]:
+				if 0 <= front[0]+ofs and front[0]+ofs < 8 and self.board[front[0]+ofs, front[1]]:
 					moves.append((front[0]+ofs, front[1]))
-		moves = [m for m in moves if not self.board.check(self.board.to_coup(self.pos, m))]
 		return moves
