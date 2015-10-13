@@ -37,7 +37,9 @@ class Piece:
 	def moves(self): # returns tuple list
 		raise NotImplementedError
 
-	def colorize(self, string):
+	def colorize(self, string, bg=""):
 		on_white = (self.pos[0]+self.pos[1]) % 2 == 1
+		if bg:
+			return colored(string, "grey", bg)
 		return colored(string, "grey" if on_white else "white",
 				"on_white" if on_white else "on_grey")

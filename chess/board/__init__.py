@@ -41,16 +41,15 @@ class ChessBoard:
 		self.wking = self["e1"]
 		self.bking = self["e8"]
 		self.log = GameTree()
+		self.highlight = self["a1"]
 
 	def __str__(self):
 		ret = ["   a b c d e f g h"]
 		ret += [str(8-k)+" " for k in range(8)]
 		for i in range(8):
 			for j in range(8):
-				if not self[i, j]:
-					ret[8 - j] += (self.black if (i+j)%2==0 else self.white).colorize("  ")
-				else:
-					ret[8 - j] += str(self[i, j])
+				ret[8 - j] += (self.black if (i+j)%2==0 else self.white).colorize("  " if not self[i, j] else str(self[i, j]),
+						bg="on_yellow" if (i, j) in self.highlight.moves else "")
 		for k in range(8):
 			ret[1+k] += " "+str(8-k)
 		ret += ["   a b c d e f g h"]

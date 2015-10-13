@@ -14,4 +14,4 @@ class Roi(Piece):
 	def __repr__(self):
 		return "R"
 	def __str__(self):
-		return self.colorize(" \u2654" if self.white else " \u265A")
+		return " \u2654" if self.white else " \u265A"

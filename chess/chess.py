@@ -7,6 +7,7 @@ cb = ChessBoard()
 
 while True:
 	print(cb)
+	print(cb.highlight, cb.highlight.moves)
 	move = input("Les %s jouent : " % ("blancs" if cb.turn=="white" else "noirs"))
 	if move == "q":
 		break
@@ -18,5 +19,7 @@ while True:
 		cb.log.save(move.split()[1])
 	elif move.startswith("l"):
 		cb.log.load(move.split()[1])
+	elif move.startswith("h"):
+		cb.highlight = cb[move.split()[1]]
 	else:
 		cb.move(move)

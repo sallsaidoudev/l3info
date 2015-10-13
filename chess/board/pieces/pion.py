@@ -14,26 +14,23 @@ class Pion(Piece):
 	def __repr__(self):
 		return ""
 	def __str__(self):
-		return self.colorize(" \u2659" if self.white else " \u265F")
+		return " \u2659" if self.white else " \u265F"
 
 	@property
-	def moves(self): # NOPE
+	def moves(self):
 		moves = []
 		# devant
-		front = [self.x, self.y + (1 if self.white else -1)]
+		front = [self.pos[0], self.pos[1] + (1 if self.white else -1)]
 		if 0 <= front[1] and front[1] <= 8:
 			if not self.board[front]:
 				moves.append(tuple(front))
 			# départ
-			start = [self.x, self.y + (2 if self.white else -2)]
-			if self.y in [1, 6] and not self.board[start]:
+			start = [self.pos[0], self.pos[1] + (2 if self.white else -2)]
+			if self.pos[1] in [1, 6] and not self.board[start]:
 				moves.append(tuple(start))
 			# prises
-			try:
-				for ofs in [-1, 1]:
-					if self.board[front[0]+ofs, front[1]]:
-						moves.append((front[0]+ofs, front[1]))
-			except KeyError:
-				pass
+			for ofs in [-1, 1]:
+				if 0 <= front[0]+ofs and front[0]+ofs <= 8 and self.board[front[0]+ofs, front[1]]:
+					moves.append((front[0]+ofs, front[1]))
 		moves = [m for m in moves if not self.board.check(self.board.to_coup(self.pos, m))]
 		return moves

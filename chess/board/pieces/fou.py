@@ -14,4 +14,19 @@ class Fou(Piece):
 	def __repr__(self):
 		return "F"
 	def __str__(self):
-		return self.colorize(" \u2657" if self.white else " \u265D")
+		return " \u2657" if self.white else " \u265D"
+
+    @property
+    def moves(self):
+        moves = []
+        def valid_step(step):
+            return step[0] in range(8) and step[1] in range(8)
+        for gp in [2, -2]:
+            for pp in [1, -1]:
+                step = (self.pos[0] + gp, self.pos[1] + pp)
+                if valid_step(step) and (not self.board[step] or self.board[step].color != self.color):
+                    moves.append(step)
+                step = (self.pos[0] + pp, self.pos[1] + gp)
+                if valid_step(step) and (not self.board[step] or self.board[step].color != self.color):
+                    moves.append(step)
+        return moves
