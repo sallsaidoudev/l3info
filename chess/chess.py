@@ -31,11 +31,6 @@ while True:
 			print("Partie introuvable")
 		except Exception as e:
 			print("Erreur :", e)
-	elif move.startswith("h"):
-		try:
-			cb.highlight = cb[move.split()[1]]
-		except KeyError:
-			print("Pas de pièce à ces coordonnées")
 	else:
 		if not cb.move(move):
 			print("coup invalide")

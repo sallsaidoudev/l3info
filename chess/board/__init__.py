@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 #-*- coding: utf8 -*-
 
+import re
 import termcolor
-from termcolor import colored
 
 from gametree import GameTree
 from .pieces import Piece
@@ -44,13 +44,13 @@ class ChessBoard:
         self.highlight = self["a1"]
 
     def __str__(self):
-        moves = [m for m in self.highlight.moves if not self.check(self.to_coup(self.highlight.pos, m))]
+        #moves = [m for m in self.highlight.moves if not self.check(self.to_coup(self.highlight.pos, m))]
         ret = ["   a b c d e f g h"]
         ret += [str(8-k)+" " for k in range(8)]
         for i in range(8):
             for j in range(8):
-                ret[8 - j] += (self.black if (i+j)%2==0 else self.white).colorize("  " if not self[i, j] else str(self[i, j]),
-                        bg="on_yellow" if (i, j) in moves else "")
+                ret[8 - j] += (self.black if (i+j)%2==0 else self.white).colorize("  " if not self[i, j] else str(self[i, j]))
+                        #bg="on_yellow" if (i, j) in moves else "")
         for k in range(8):
             ret[1+k] += " "+str(8-k)
         ret += ["   a b c d e f g h"]
@@ -77,6 +77,8 @@ class ChessBoard:
             self.board[x][y] = value
         except (ValueError, IndexError, AssertionError):
             raise KeyError("coordonnées invalides : %s" % str(key))
+        else:
+            self.board[x][y] = value
 
     def check(self, coup): # returns True if current player is check after coup
         self.move(coup)
@@ -90,11 +92,34 @@ class ChessBoard:
         return is_check
 
     def move(self, coup, log=True):
-        dest = coup.rstrip("TCFDR")[-2:]
-        ori = coup.lstrip("TCFDR")[0:2]
+        if coup in ("O-O", "O-O-O"):
+            self.rook(coup)
+        coup_re = re.match(r"^([TCFDR]?)([a-h1-8]?)x?([a-h][1-8])([TCFDR]?)[#+]?$", coup)
+        if not coup_re:
+            return False
+        playing = coup_re.group(1) # playing = repr(piece)
+        doubt = coup_re.group(2)
+        dest = coup_re.group(3)
+        prom = coup_re.group(4)
+        can_move = []
+        for col in self.board:
+            for p in col:
+                if p and playing==repr(p) and p.color==self.turn and self.to_coords(*dest) in p.moves:
+                    can_move.append(p)
+        if not can_move or (len(can_move) > 1 and not doubt):
+            return False
+        if len(can_move) > 1:
+            i = int(doubt) - 1 if doubt.isdigit() else "abcdefgh".index(doubt)
+            can_move = [p for p in can_move
+                    if (doubt.isdigit() and i==p.pos[1]) or (doubt in "abcdefgh" and i==p.pos[0])]
+        if len(can_move) != 1:
+            return False
+        piece = can_move[0]
+        print(piece, piece.pos, dest)
         if log:
-            self.log.move(coup, self[dest])
-        self[dest] = self[ori]
-        self[dest].pos = self.to_coords(*dest)
-        self[ori] = None
+            self.log.move(coup, self[dest], piece.pos, dest)
+        self[dest] = piece
+        self[piece.pos] = None
+        piece.pos = self.to_coords(*dest)
         self.turn = "white" if self.turn=="black" else "black"
+        return True

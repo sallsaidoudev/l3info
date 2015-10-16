@@ -1,0 +1,46 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\title{ARC1 - TP 3}
+\author{Aurélien Anne, Léo Noël-Baron \& Thierry Sampaio}
+\date{16/10/2015}
+
+\input{../../../tex/rap_header}
+\usepackage{amssymb}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Additionneur de trois opérandes}
+
+Le résultat d'une addition de trois opérandes sur 4 bits est compris dans l'intervalle $[0, 45]$ soit $[0, 101101]$ en binaire ; il doit donc être codé sur 6 bits.
+
+On obtient les 4 bits faibles du résultat en enchaînant deux additionneurs à deux opérandes, et on les 2 bits restants respectent la table suivante :
+\begin{center}\begin{tabular}{c|c}
+$r_1r_2$ & $s_5s_4$ \\
+00 & 00 \\
+01 & 01 \\
+10 & 01 \\
+11 & 10 \\
+\end{tabular}\end{center}
+où $r_1$ et $r_2$ sont les restes respectifs du premier et du deuxième additionneur. Ainsi on a $s_5=r_1\cdot r_2$ et $s_4=r_1\oplus r_2$, ce qui permet de concevoir le circuit en Figure \ref{add3}.
+
+\begin{figure}[h]
+\center
+%\includegraphics[scale=0.8]{Addec1.PNG}
+\caption{Schéma du composant ADD3}
+\label{add3}
+\end{figure}
+
+
+\subsection*{Nombre de bits à 1}
+
+Le résultat étant compris dans l'intervalle $[0, 4]$, 3 bits suffisent pour le coder.
+
+
+\subsection*{Comparateur binaire}
+
+Bla.
+
+\end{document}
