@@ -1,0 +1,21 @@
+set video_mode "800 600"
+bind_action left  w
+bind_action right e
+bind_action down  s
+bind_action up    n
+bind_action a     w 1
+bind_action d     e 1
+bind_action s     s 1
+bind_action w     n 1
+bind_action pad4  w 2
+bind_action pad6  e 2
+bind_action pad5  s 2
+bind_action pad8  n 2
+bind_action j     w 3
+bind_action l     e 3
+bind_action k     s 3
+bind_action i     n 3
+echo "bindings ok..."
+server
+connect
+connect

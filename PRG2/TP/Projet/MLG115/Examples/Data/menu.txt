@@ -1,0 +1,26 @@
+menu_command main "quick start" {server; connect}
+menu_var main delay delay {m_float 0.01} {m_no_edit}
+menu_var main active_wait active_wait {m_bool} {m_no_edit}
+
+menu_jump main network network
+  menu_command network server server
+  menu_command network "add player" connect
+  menu_command network "del player" disconnect
+menu_jump network back main
+
+menu_jump main video video
+  menu_var video video_mode video_mode {m_none} {m_editable}
+  menu_var video fullscreen fullscreen {m_bool} {m_no_edit} 
+menu_jump video back main
+
+menu_command main quit quit
+
+#set_current_menu main
+
+menu_rebuild
+
+bind_mode up tmenu {tmenu_up}
+bind_mode down tmenu {tmenu_down}
+bind_mode left tmenu {tmenu_left}
+bind_mode right tmenu {tmenu_right}
+bind_mode enter tmenu {tmenu_enter}

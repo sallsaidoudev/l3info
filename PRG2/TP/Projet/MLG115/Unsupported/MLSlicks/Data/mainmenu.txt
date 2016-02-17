@@ -1,0 +1,4 @@
+video_set_driver x11
+set video_mode "640 480"
+bind_action space break 0 
+

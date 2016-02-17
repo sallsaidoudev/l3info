@@ -1,0 +1,90 @@
+idea dump
+
++ implemented
+- just idea, not nesessarily todo
+
+econ
++ cash at start
+- injections (steady, fixed)
+- interest rate
+- inflation (is it the same as above?)
++ free market
+
+scoring
++ basic: per kill, survive
++ per kill, damage
+- maluses
++ multiplier
++ adaptive
+- weapon modifier
+
+weapon supply
+- at start
+- injections
+
+physics
+- air viscosity
+- wall efect: wrap, concrete, none, padded, rubber, spring, random, erratic
++ wind, changing, max
+- centric gravity fields
+- damage on fall
+ 
+landscape
+- falling ground
+- explosions tear of dirt, dirt flies
+
+play
+- teams
+- turn order
+- arms level
+
+weapons opt
+- scale
+- tunneling
+- arms level
+- trace paths
+
+weapons
++ trident
+
+weapons (SE)
++ b/n missle, b/n nuke
+- b/n/h roller
+- mirv, dhead
+- funky bomb
+- leap frog
+- h/n napalm
+- riot charge/blast 
+- n/h riot bomb
+- (smoke) tracer
+- b/n/h digger
+- b/n/h sandhog
+- clod/ball/ton/liquid/charge dirt
+- earth disrupter
+- plasma blast
+- laser
+- heat/bal/horz/vert/lazy guidance
+- parachute, battery, contact trigg
+- fuel
+- mag deflector,super mag
+- n/h shield, force
+
+worms
+- shotgun/uzi/minigun/handgun
+- bazooka, homing missle, mortar
+- grenade, h/n cluster bomb, banana
+- petrol
+- air strike, napalm strike, homing
+- kamikaze, mine, sheep, dynamite
+- blowtorch, drill, girder
+- teleport
+- jetpack, laser sight
+- earthquake, molebomb, minedrop
+- flamethrower, skunk
+
+- jump jets
+- penetrator
+
+ideas
+- mutually exclusive equipment
+- energy (replenishes, but at limited rate) for jjets, firing, special attacks

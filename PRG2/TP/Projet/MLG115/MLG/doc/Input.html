@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Helpers.html">
+<link rel="next" href="Input_edit.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Console" rel="Chapter" href="Console.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Helpers" rel="Chapter" href="Helpers.html">
+<link title="Input" rel="Chapter" href="Input.html">
+<link title="Input_edit" rel="Chapter" href="Input_edit.html">
+<link title="Keys" rel="Chapter" href="Keys.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Net" rel="Chapter" href="Net.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Serialize" rel="Chapter" href="Serialize.html">
+<link title="Socket" rel="Chapter" href="Socket.html">
+<link title="Sprite" rel="Chapter" href="Sprite.html">
+<link title="Tcp" rel="Chapter" href="Tcp.html">
+<link title="Udp" rel="Chapter" href="Udp.html">
+<link title="Vector" rel="Chapter" href="Vector.html">
+<link title="Video" rel="Chapter" href="Video.html"><title>Input</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Helpers.html" title="Helpers">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Input_edit.html" title="Input_edit">Next</a>
+</div>
+<h1>Module <a href="type_Input.html">Input</a></h1>
+
+<pre><span class="keyword">module</span> Input: <code class="code">sig</code> <a href="Input.html">..</a> <code class="code">end</code></pre><div class="info module top">
+Module input is responsible for handling all low level input releted
+   things. Input ands following commans to parser:<ul>
+<li>bind_action</li>
+<li>bind_global</li>
+<li>quit</li>
+</ul>
+<br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEmode"><span class="keyword">type</span> <code class="type"></code>mode</span> </pre>
+<div class="info ">
+input mode type. 
+   An input mode is the state in which the game is. All input is processed
+   according to this mode. Eg when the player has openede the menu all input
+   is directed to the menu. It can also be used in games, eg when the player
+   is in the shop other keybindings are active.<br>
+</div>
+
+
+<pre><span id="EXCEPTIONQuit"><span class="keyword">exception</span> Quit</span></pre>
+<div class="info ">
+Exception Quit is raised when the player has requested quit either by
+   pressing Ctrl-C, trying to close the window, or by non-fatal signal<br>
+</div>
+
+<pre><span id="VALadd_mode"><span class="keyword">val</span> add_mode</span> : <code class="type">?super:bool -> string -> (Sdlevent.event -> unit) -> <a href="Input.html#TYPEmode">mode</a></code></pre><div class="info ">
+<code class="code">add_mode name handle_event_fun</code> creates new mode named <code class="code">name</code> in
+   which events are handled by <code class="code">handle_event_fun</code>. If the mode is a super
+   mode it can be set by the user and afterwards the user may cancel it<br>
+</div>
+
+<pre><span id="VALset_mode"><span class="keyword">val</span> set_mode</span> : <code class="type"><a href="Input.html#TYPEmode">mode</a> -> unit</code></pre><div class="info ">
+<code class="code">set_mode m</code> sets current mode to m<br>
+</div>
+
+<pre><span id="VALprocess_events"><span class="keyword">val</span> process_events</span> : <code class="type">?events_per_frame:int -> unit -> bool</code></pre><div class="info ">
+<code class="code">process_events ?n ()</code> processes at most <code class="code">n</code> events from a buffer. <code class="code">n</code> is
+   optional. It returns if anything has happened.<br>
+</div>
+
+<pre><span id="VALadd_action"><span class="keyword">val</span> add_action</span> : <code class="type">?mode:<a href="Input.html#TYPEmode">mode</a> -> string -> (int -> unit) -> (int -> unit) -> unit</code></pre><div class="info ">
+<code class="code">add_action ?mode action_name start_fun end_fun</code> adds an action to the
+   console (allows binding it). When a local player does "bind_action
+   key_name action_name n" on the console then after pressing <code class="code">key_name</code>,
+   <code class="code">start_fun</code> will be called with param <code class="code">n</code>. It allows you to use one action
+   for several players.<br>
+</div>
+<div class="param_info"><code class="code">mode</code> : is an optional parameter which decides in which mode the action
+   should be active. If not given the action is added to current mode.</div>
+
+<pre><span id="VALget_real_mode"><span class="keyword">val</span> get_real_mode</span> : <code class="type">unit -> <a href="Input.html#TYPEmode">mode</a></code></pre><div class="info ">
+<code class="code">get_real_mode</code><br>
+<b>Returns</b> current privileged mode or mode if none is set<br>
+</div>
+
+<pre><span id="VALset_repeat_handler"><span class="keyword">val</span> set_repeat_handler</span> : <code class="type">(unit -> bool) option -> unit</code></pre><div class="info ">
+Internal. Sets the callback for event repeating<br>
+</div>
+</body></html>

@@ -1,0 +1,20 @@
+video_set_driver x11
+set video_mode "640 480"
+set fullscreen false
+bind_action left  left  0
+bind_action right right 0
+bind_action up    up    0
+bind_action down  down  0
+bind_action a     left  1
+bind_action d     right 1
+bind_action w     up    1
+bind_action s     down  1
+bind_action pad4  left  2
+bind_action pad6  right 2
+bind_action pad8  up    2
+bind_action pad5  down  2
+bind_action j     left  3
+bind_action l     right 3
+bind_action i     up    3
+bind_action k     down  3
+bind_action space start 0 

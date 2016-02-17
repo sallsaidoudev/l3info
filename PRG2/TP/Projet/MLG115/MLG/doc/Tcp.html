@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Sprite.html">
+<link rel="next" href="Udp.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Console" rel="Chapter" href="Console.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Helpers" rel="Chapter" href="Helpers.html">
+<link title="Input" rel="Chapter" href="Input.html">
+<link title="Input_edit" rel="Chapter" href="Input_edit.html">
+<link title="Keys" rel="Chapter" href="Keys.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Net" rel="Chapter" href="Net.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Serialize" rel="Chapter" href="Serialize.html">
+<link title="Socket" rel="Chapter" href="Socket.html">
+<link title="Sprite" rel="Chapter" href="Sprite.html">
+<link title="Tcp" rel="Chapter" href="Tcp.html">
+<link title="Udp" rel="Chapter" href="Udp.html">
+<link title="Vector" rel="Chapter" href="Vector.html">
+<link title="Video" rel="Chapter" href="Video.html"><title>Tcp</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Sprite.html" title="Sprite">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Udp.html" title="Udp">Next</a>
+</div>
+<h1>Module <a href="type_Tcp.html">Tcp</a></h1>
+
+<pre><span class="keyword">module</span> Tcp: <code class="code">sig</code> <a href="Tcp.html">..</a> <code class="code">end</code></pre><div class="info module top">
+Module with simple TCP interface. 
+<p>
+
+   <a href="Tcp.html#TYPEsocket"><code class="code">Tcp.socket</code></a>'s should not be compared, since on some systems 
+   (eg. Windows) such a comparison may fail. If comparison is 
+   required see <a href="Socket.html#TYPEt"><code class="code">Socket.t</code></a>.
+<p>
+
+   On a client there should be a single socket for every server. On a
+   server for every one waiting for new connections (Created by 
+   <a href="Tcp.html#VALcreate_socket"><code class="code">Tcp.create_socket</code></a>) there are some connected to every client.
+<p>
+
+   Every TCP socket is full duplex.<br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEsocket"><span class="keyword">type</span> <code class="type"></code>socket</span> </pre>
+<div class="info ">
+Type reperesenting a single inbound or outbound connection.<br>
+</div>
+
+
+<pre><span id="EXCEPTIONLost"><span class="keyword">exception</span> Lost</span></pre>
+<div class="info ">
+Exception raised when a connection is lost. It is only raised by
+   <a href="Tcp.html#VALread"><code class="code">Tcp.read</code></a> and <a href="Tcp.html#VALwrite"><code class="code">Tcp.write</code></a> operations.<br>
+</div>
+
+<pre><span id="EXCEPTIONError"><span class="keyword">exception</span> Error</span> <span class="keyword">of</span> <code class="type">string</code></pre>
+<div class="info ">
+Exception raised when the requested operation cannon be
+   currently completed by the operating system<br>
+</div>
+
+<pre><span id="VALcreate_socket"><span class="keyword">val</span> create_socket</span> : <code class="type">int -> int -> <a href="Tcp.html#TYPEsocket">socket</a></code></pre><div class="info ">
+<code class="code">create_socket port client_limit</code> should be called on the server
+   to create a socket waiting for new clients. The clients should
+   then connect to the given <code class="code">port</code>. <code class="code">client_limit</code> is the limit
+   for clients that are trying to connect at the same time. This is
+   not the limit of connected clients, but the limit for clients trying
+   to connect until <a href="Tcp.html#VALcheck_socket"><code class="code">Tcp.check_socket</code></a> is called.<br>
+</div>
+
+<pre><span id="VALcheck_socket"><span class="keyword">val</span> check_socket</span> : <code class="type"><a href="Tcp.html#TYPEsocket">socket</a> -> <a href="Tcp.html#TYPEsocket">socket</a> list</code></pre><div class="info ">
+<code class="code">check_socket socket</code> should be called only on the server on a socket
+   created by <a href="Tcp.html#VALcreate_socket"><code class="code">Tcp.create_socket</code></a>. It returns a list of new sockets, one for
+   every new connected client.<br>
+</div>
+
+<pre><span id="VALconnect"><span class="keyword">val</span> connect</span> : <code class="type">string -> int -> <a href="Tcp.html#TYPEsocket">socket</a></code></pre><div class="info ">
+<code class="code">connect hostname port</code> When called on a client it tries to connect to
+   the given server and <code class="code">port</code> and returns connected socket or throws
+   Not_available<br>
+</div>
+
+<pre><span id="VALwrite"><span class="keyword">val</span> write</span> : <code class="type"><a href="Tcp.html#TYPEsocket">socket</a> -> string -> int -> int -> string</code></pre><div class="info ">
+<code class="code">write socket str pos len</code> Just like Unix.write<br>
+</div>
+
+<pre><span id="VALread"><span class="keyword">val</span> read</span> : <code class="type"><a href="Tcp.html#TYPEsocket">socket</a> -> string list</code></pre><div class="info ">
+<code class="code">read socket</code> may return an empty list<br>
+</div>
+
+<pre><span id="VALforce_read"><span class="keyword">val</span> force_read</span> : <code class="type"><a href="Tcp.html#TYPEsocket">socket</a> -> string</code></pre><div class="info ">
+<code class="code">force_read socket</code> blocking<br>
+</div>
+
+<pre><span id="VALclose"><span class="keyword">val</span> close</span> : <code class="type"><a href="Tcp.html#TYPEsocket">socket</a> -> unit</code></pre><div class="info ">
+<code class="code">close socket</code> when called on the client disconnects from the server,
+   when called on the server on a created socket it stops accepting client 
+   and when called on the server with a socket from a client it closes the
+   connection to the client (to the client it looks like the connection
+   has been lost).<br>
+</div>
+</body></html>

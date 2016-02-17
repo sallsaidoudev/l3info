@@ -1,0 +1,16 @@
+#!/bin/sh
+if [ $# != 1 ]
+then
+	echo 'format: lsrep <dir>'
+elif [ ! -d $1 ]
+then
+	echo 'arg must be a dir'
+fi
+echo `find $1 -maxdepth 1 -type d`
+
+
+let trait_char c = match c with 
+     '$'  -> raise Fin
+   | '\n' -> next_line ()
+   | '\r' -> next_line ()
+   |   _  -> Graphics.draw_char c ;;

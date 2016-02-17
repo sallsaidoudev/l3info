@@ -1,0 +1,303 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\title{SYR1 Réseau -- TP 2, 3 et 4\\Communication réseau en Java}
+\author{Léo Noël-Baron \& Thierry Sampaio}
+\date{3/12/2015}
+
+\input{../../../tex/rap_header}
+
+\lstset{language=Java}
+\setlength{\parindent}{0em}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Ces trois séances de TP ont pour but de pratiquer la communication réseau à l'aide des sockets proposés par Java, en implémentant diverses applications reposant sur les protocoles UDP, TCP et HTTP.
+\end{abstract}
+\section{Le protocole UDP}
+
+\subsection{Client simple et serveur d'écho}
+
+On souhaite développer une application client-serveur en mode UDP, réalisant un écho (le serveur renvoie tout message reçu au client qui l'a émis).
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+public class UDPServer {
+	private static byte[] buffer = new byte[1024];
+	public static void main(String args[]) throws IOException {
+		// Mise en écoute sur le port 8080
+		DatagramSocket server = new DatagramSocket(8080);
+        System.out.println("UDP server running on 8080...");
+		// Boucle d'écoute
+		while (true) {
+			// Réception d'un paquet UDP
+			DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+			server.receive(request);
+			// Récupération des informations client
+			InetAddress ip = request.getAddress();
+			int port = request.getPort();
+			System.out.println(new String(request.getData()));
+			// Renvoi de l'écho
+			server.send(new DatagramPacket(buffer, buffer.length, ip, port));
+		}
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+public class UDPClient {
+	private static byte[] buffer = new byte[1024];
+	public static void main(String args[]) throws IOException {
+		// Création du socket client
+		DatagramSocket client = new DatagramSocket();
+		// Consitution du paquet UDP et envoi
+		InetAddress ip = InetAddress.getByName("localhost");
+		System.out.print("Message (enter to send): ");
+		String message =
+				new BufferedReader(new InputStreamReader(System.in)).readLine();
+		buffer = message.getBytes();
+		client.send(new DatagramPacket(buffer, buffer.length, ip, 8080));
+		// Réception de la réponse
+		DatagramPacket answer = new DatagramPacket(buffer, buffer.length);
+		client.receive(answer);
+		System.out.println("From server: " + new String(answer.getData()));
+		client.close();
+	}
+}
+\end{lstlisting}
+
+Les communications doivent s'effectuer sur un port supérieur à 1024 ; en effet, les ports inférieurs ne peuvent être utilisés que par l'administrateur (et ce pour des raisons historiques et de sécurité, voir \href{http://unix.stackexchange.com/questions/16564/why-are-the-first-1024-ports-restricted-to-the-root-user-only}{cette discussion sur StackExchange}). La communication entre client et serveur ne peut s'établir que si les deux s'exécutent en même temps et sur le même port ; cependant, dans le cas contraire, les deux programmes ne plantent pas et l'ordre de lancement n'est pas important. L'IP de retour du client est contenue dans le paquet envoyé au serveur, qui l'extrait pour pouvoir adresser sa réponse.
+
+\subsection{Application ping}
+
+On souhaite maintenant, en utilisant un serveur fourni, développer un client qui réalise un ping (envoi d'un ou plusieurs messages simples vers une machine du réseau, en vue d'analyser et de diagnostiquer son état). Le serveur simule un taux de perte de paquets UDP qui devra être pris en compte (en utilisant un timeout).
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+import java.util.Date;
+public class PingClient {
+    private static byte[] buffer = new byte[1024];
+    public static void main(String[] args) throws IOException {
+        DatagramSocket socket = new DatagramSocket(); // Socket client
+        socket.setSoTimeout(1000); // Timeout d'une seconde
+        InetAddress ip = InetAddress.getByName("localhost"); // Adresse
+        int cpt = 0; // Nombre de pings reçus
+        int tt = 0; // Temps de voyage total
+        for (int i=0; i<10; i++) {
+            // Envoi d'un ping
+            Date then = new Date();
+            buffer = ("PING "+i+" "+(then.getTime())+" \n").getBytes();
+            socket.send(new DatagramPacket(buffer, buffer.length, ip, 8080));
+            // Réception de la réponse
+            DatagramPacket answer = new DatagramPacket(buffer, buffer.length);
+            try {
+                socket.receive(answer);
+            } catch (SocketTimeoutException e) {
+                System.out.println("Timeout");
+                continue;
+            }
+            // Analyse de la réponse
+            String[] infos = (new String(answer.getData())).split(" ");
+            int seq = Integer.parseInt(infos[1]);
+            int rtt = (int) ((new Date()).getTime() - Long.parseLong(infos[2]));
+            System.out.println("Server at "+ip+" answered for request "
+            		+seq+" in "+rtt+"ms");
+            cpt++;
+            tt += rtt;
+        }
+        socket.close();
+        // Statistiques
+        System.out.println("10 packets transmitted, "+cpt+" received, "
+       			+((10-cpt)*10)+"% lost\nRTT average: "+((float) tt/cpt));
+    }
+}
+\end{lstlisting}
+
+
+\section{Le protocole TCP}
+
+On implémente à nouveau l'application écho vue précédemment, mais en s'appuyant cette fois sur le protocole TCP.
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+public class TCPServer {
+    public static void main(String[] args) throws IOException {
+    	// Mise en écoute sur le port 8080
+        ServerSocket socket = new ServerSocket(8080);
+        System.out.println("TCP server running on 8080...");
+        // Boucle d'écoute
+        while (true) {
+        	// Réception d'un nouveau message
+            Socket client = socket.accept();
+            String message = new BufferedReader(new InputStreamReader(
+            		client.getInputStream())).readLine();
+            System.out.println(message);
+            // Renvoi de l'écho
+            OutputStream output = client.getOutputStream();
+            output.write(message.getBytes());
+            client.close();
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+public class TCPClient {
+    public static void main(String[] args) throws Exception {
+        // Connexion au serveur distant
+        Socket socket = new Socket("localhost", 8080);
+        // Envoi d'un message
+        System.out.print("Message (enter to send): ");
+        String message = new BufferedReader(new InputStreamReader(
+        		System.in)).readLine() + "\n";
+        OutputStream output = socket.getOutputStream();
+        output.write(message.getBytes());
+        // Réception de l'écho
+        BufferedReader input = new BufferedReader(new InputStreamReader(
+        		socket.getInputStream()));
+        System.out.println("From server: " + input.readLine());
+    }
+}
+\end{lstlisting}
+
+Si l'on essaie de lancer le client avant le serveur, celui-ci plante (connexion refusée). La différence avec le protocole UDP est que les deux programmes essaient de créer une connexion avant de communiquer (avec UDP, les paquets sont envoyés sans certitude que le destinataire puisse les recevoir) ; TCP est ainsi plus sûr mais plus lourd alors qu'UDP est plus simple mais pas fiable.
+
+
+\section{Le protocole HTTP}
+
+\subsection{Client simple}
+
+On crée un client HTTP simplifié, réalisant une unique requête vers une page précise.
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+public class HTTPClient {
+    public static void main(String[] args) throws Exception {
+        // Connexion au serveur
+        Socket socket = new Socket("localhost", 8080);
+        // Requête HTTP
+        OutputStream output = socket.getOutputStream();
+        output.write("GET /quelquechose HTTP/1.0 \n\n".getBytes());
+        // Réponse du serveur
+        BufferedReader input = new BufferedReader(new InputStreamReader(
+        		socket.getInputStream()));
+        String response = "", line = "";
+        while ((line = input.readLine()) != null)
+            response += line + "\n";
+        System.out.println(response);
+    }
+}
+\end{lstlisting}
+
+Comme attendu, on reçoit une réponse HTTP de statut 200 OK, dont les dernières lignes contiennent bien la page demandée.
+
+\subsection{Serveur simple}
+
+On crée maintenant un serveur HTTP basique capable de traiter les requêtes GET, et de distribuer une unique page d'exemple à un seul client à la fois.
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+public class HTTPServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket socket = new ServerSocket(8080);
+        System.out.println("HTTP server running on 8080...");
+        // Boucle d'écoute
+        while (true) {
+            // Lecture d'une requête
+            Socket client = socket.accept();
+            String request = new BufferedReader(new InputStreamReader(
+            		client.getInputStream())).readLine();
+            String reqs[] = request.split(" ");
+            if (!reqs[0].equals("GET")) { // On n'accepte que les GET
+                System.out.println("Can't accept non-GET requests");
+                continue;
+            }
+            // Réponse HTTP (page unique)
+            OutputStream output = client.getOutputStream();
+            SimpleDateFormat dateFormat = new SimpleDateFormat(
+            		"EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+            String response = "HTTP/1.0 200 OK \n"
+                    + "Date: "+dateFormat.format(new Date())+"\n"
+                    + "Server: TPsyr 1.0\n\n"
+                    + "<html>h1>Hello world.</h1>"
+                    + "I'm a web server, how can I help you?</html>";
+            output.write(response.getBytes());
+            client.close();
+        }
+    }
+}
+\end{lstlisting}
+
+Ce serveur fonctionne et distribue correctement sa page, que ce soit au client vu précédemment ou à un navigateur classique ; quelques valeurs ont été rajoutées dans l'en-tête HTTP mais d'autres encore seraient envisageables.
+
+\subsection{Serveur réaliste}
+
+On souhaite enfin améliorer le serveur précédent pour lui permettre de distribuer les pages situées dans un répertoire données, selon l'adresse spécifiée dans la requête GET. Cette amélioration doit en outre prendre en compte le cas où le fichier demandé n'existe pas (code HTTP 404).
+
+\begin{lstlisting}
+import java.io.*;
+import java.net.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+public class HTTPBetterServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket socket = new ServerSocket(8080);
+        System.out.println("HTTP server running on 8080...");
+        // Boucle d'écoute
+        while (true) {
+            // Lecture d'une requête
+            Socket client = socket.accept();
+            String request = new BufferedReader(new InputStreamReader(
+            		client.getInputStream())).readLine();
+            String reqs[] = request.split(" ");
+            if (!reqs[0].equals("GET")) {
+                System.out.println("Can't accept non-GET requests");
+                continue;
+            }
+            // Réponse HTTP
+            OutputStream output = client.getOutputStream();
+            BufferedReader file = null;
+            try { // On tente de récupérer le fichier demandé
+                System.out.println("Fetching file "+reqs[1]);
+                file = new BufferedReader(new FileReader("www"+reqs[1]));
+            } catch (Exception e) { // S'il n'existe pas, 404
+                output.write("HTTP/1.0 404 Not Found\n\n"
+                		+ "<html><h1>404 Not Found</h1></html>".getBytes());
+                client.close();
+                continue;
+            }
+            // Le fichier a été récupéré, on le sert
+            SimpleDateFormat dateFormat = new SimpleDateFormat(
+            		"EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+            String response = "HTTP/1.0 200 OK \n"
+                    + "Date: "+dateFormat.format(new Date())+"\n"
+                    + "Server: TPsyr1.0\n\n";
+            String line = "";
+            while ((line = file.readLine()) != null)
+                response += line + "\n";
+            output.write(response.getBytes());
+            client.close();
+        }
+    }
+}
+\end{lstlisting}
+
+Ce serveur permet effectivement d'accéder aux fichiers contenus dans le sous-répertoire \verb?www? du répertoire de travail courant ; nous avons là la base d'un serveur HTTP fonctionnel bien que pour l'instant limité.
+
+\end{document}

@@ -1,0 +1,3 @@
+Diviser pour Régner :
+- pourquoi le log ? -> T(n) = aT(n/b) + f(n) (ou O(1) si n = 1)
+- formaliser "la fusion prend un temps linéaire"

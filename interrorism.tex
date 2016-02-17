@@ -1,0 +1,68 @@
+% CV 12/01/16
+\documentclass[12pt,a4paper]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                            % style options are 'casual' (default), 'classic', 'banking', 'oldstyle' and 'fancy'
+\moderncvcolor{blue}                               % color options 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple' and 'red'
+
+% character encoding
+\usepackage[utf8]{inputenc}                        % if you are not using xelatex ou lualatex, replace by the encoding you are using
+
+% adjust the page margins
+\usepackage[scale=0.82]{geometry}
+\setlength{\hintscolumnwidth}{3cm}                 % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+% personal data
+\name{Léo}{Noël-Baron}
+%\address{187, ave. Général Leclerc}{35000 Rennes}{France}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+%\phone[mobile]{06 33 88 99 91}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
+%\email{leo.noelbaron@gmail.com}                               % optional, remove / comment the line if not wanted
+%\homepage{www.johndoe.com}                         % optional, remove / comment the line if not wanted
+%\social[linkedin]{john.doe}                        % optional, remove / comment the line if not wanted
+%\social[twitter]{jdoe}                             % optional, remove / comment the line if not wanted
+%\social[github]{jdoe}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+
+% bibliography adjustements (only useful if you make citations in your resume, or print a list of publications using BibTeX)
+%   to show numerical labels in the bibliography (default is to show no labels)
+\makeatletter\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}\makeatother
+%   to redefine the bibliography heading string ("Publications")
+%\renewcommand{\refname}{Articles}
+
+% bibliography with mutiple entries
+%\usepackage{multibib}
+%\newcites{book,misc}{{Books},{Others}}
+
+\newcommand{\sep}{$\cdot$ }
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       letter       ---------------------------------------------------------
+% recipient data
+\recipient{The Hague International Human Rights Commission}{Terrorism and the Internet}
+\date{Rennes, January 21\textsuperscript{st}, 2016}
+\opening{Sir,}
+\closing{Respectfully yours,}
+%\enclosure[Attached]{curriculum vit\ae{}}          % use an optional argument to use a string other than "Enclosure", or redefine \enclname
+\makelettertitle
+
+Terrorism is the worst of human soul's abjections. Its most recent attempts to take down democracy by hurting our fundamental liberties---as well as our bodies---left us shocked and frightened. But their victory will only be complete if we give up to fear and take bad decisions for bad reasons, as we seem about to.
+
+That is the only reason for this letter I write to you as the leader of the International Foundation for Freedom of Mind. Our organization has a long history of fighting whoever tried to limit birth-given rights of the human mind---freedom of speech, reunion or opinion. Therefore, terrorists represent the mere incarnation of our Nemesis; we can only rejoice that a lot of people shared these views after the recent tragic events, and stood up against obscurantism.
+
+Some of the actions led against terrorists, however, need to be thought again. In the few past days, governments and social media companies like Facebook said a lot about monitoring their users to detect terrorists---not to mention Donald Trump efforts on how we should ``shut down the internet''. Do governments have to oversee what became for most of us a standard way to communicate? Do we want those huge social media firms to know even more about us than they already do? Accepting this harness would legitimate their questionable business model; it would mean that we definitely allow them to sell and buy our digital selves, that we don't care about what some already call an extension of our soul.
+
+Furthermore, hackers who try to fight against new ways of terrorist propaganda on the Internet also have it wrong. Maybe not all of them, but those striking Twitter accounts have made as much benefit than harm, hitting journalists and various organizations in the mess. Blind violence is never the proper answer to blind violence; their agressive techniques will only lead to lessen freedom of expression on a platform dedicated to it.
+
+Better ways to fight terrorism exist. To find them, we will have to deal with mourning first and then, but only then, think again about what we believe in and how to protect it.
+
+\makeletterclosing
+
+%\clearpage\end{CJK*}                              % if you are typesetting your resume in Chinese using CJK; the \clearpage is required for fancyhdr to work correctly with CJK, though it kills the page numbering by making \lastpage undefined
+\end{document}
+
+
+%% end of file `template.tex'.

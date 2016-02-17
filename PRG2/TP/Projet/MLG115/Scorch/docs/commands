@@ -1,0 +1,9 @@
+Console commands available in Scorch
+
+start - starts a game
+end - ends a game
+aim <angle> <power> - sets aim
+setw <weapon number> - sets weapon
+buy <weapon number> <quantity> - buys weapons
+inv - inventory
+done - ends player turn

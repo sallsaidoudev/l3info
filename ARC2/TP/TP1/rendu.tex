@@ -1,0 +1,51 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\title{ARC2 -- TP 1}
+\author{Léo Noël-Baron \& Thierry Sampaio}
+\date{17/01/2016}
+
+\input{../../../tex/rap_header}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{PGCD de deux constantes}
+
+En faisant tourner le programme pas à pas, on remarque que s'activent les uns après les autres, les signaux correspondant aux cycles de fetch, puis à une instruction \verb?ldw?, puis une autre, etc. On peut à chaque fois contrôler l'instruction en train de s'exécuter en visualisant le registre IR, et on constate alors que ces instructions correspondent à celles inscrites dans le fichier \verb?program.mif?.
+
+\subsection*{Programme par défaut}
+
+Ce fichier commence par les lignes\\
+\verb?00 : 01800E17; // ldw r6, 56(r0)?\\
+\verb?01 : 01C00F17; // ldw r7, 60(r0)?\\
+qui chargent dans des registres les valeurs situées aux adresses 56 et 60, c'est-à-dire les constantes données par les deux dernières instruction (leur adresse est obtenue grâce au fait que le programme est chargé en mémoire à l'adresse 0). Les autres instructions réalisent le PGCD, et la modification en dur des constantes en fin de programme a bien l'effet voulu.
+
+\subsection*{Max parmi trois}
+
+\begin{verbatim}
+.word c1 12
+.word c2 33
+.word c3 42
+debut:
+    ldw r1, c1(r0)
+    ldw r2, c2(r0)
+    ldw r3, c3(r0)
+    bge r1, r2, max1
+    addi r4, r2, 0
+    br suite
+max1:
+    addi r4, r1, 0
+suite:
+    bge r3, r4, max2
+    stw r4, 1024(r0)
+    br fin
+max2:
+    stw r3, 1024(r0)
+fin:
+.end debut
+\end{verbatim}
+Les trois valeurs à étudier doivent être placées dans les constantes définies en début de programme. Les instructions suivantes se contentent de trouver le max de deux de ces valeurs, puis d'afficher le max entre la troisième et le max précédemment calculé. Le programme s'assemble et s'exécute correctement sur la plateforme de test.
+
+\end{document}

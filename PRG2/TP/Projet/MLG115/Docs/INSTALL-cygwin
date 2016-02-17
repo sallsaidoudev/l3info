@@ -1,0 +1,44 @@
+Get the complete cygwin-with-sdl-ocaml-etc-pack.tgz
+
+Or try something like this:
+(Last tried on 10 May 2005, with lastest versions from that date)
+
+ 
+1) Get cygwin with
+   - gcc (the automatically selected mingw version)
+   - ocaml
+   - libjpeg
+   - libtiff
+   - libungif
+   - make
+2) Download libSDL
+   - ./configure -prefix=/usr
+   - make (should compile things with "-mno-cygwin"
+   - Go to src/main subdirectory
+   - edit Makefile, remove -mno-cygwin
+   - edit w32/SDL*c, remove #include direct.h
+   - make (in this subdirecroty)
+   - return to main SDL directory
+   - make install
+3) Download libSDL_image
+   - ./configure -prefix=/usr
+   - make
+   - make install
+   - remove /usr/lib/libSDL_image.dll.a
+   - edit /usr/lib/libSDL_image.la
+     - change the entry about '.dll.a' file to just '.a'
+4) Download ocaml_sdl
+   - ./configure
+   - make
+   - make install
+5) Download MLG
+   - ./configure
+   - make
+   cd Scorch
+   ./Scorch.exe
+
+Possible problems:
+  Do not use directories which include spaces in compilation,
+  eg compilation in "/home/John Doe" wont work.
+
+Good luck.

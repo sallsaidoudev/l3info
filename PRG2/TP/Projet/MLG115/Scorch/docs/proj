@@ -1,0 +1,38 @@
+flight
+  split
+  auto
+  
+hit
+  bounce
+  roll
+  split
+
+
+split (vx, vy) -> (vx, vy, mtype) list
+auto (vx, vy, target_pos) -> (vx, vy)
+
+########
+
+projectile
+  dumb
+  smart
+  digger
+  roll
+  
+warhead
+  split
+  expl
+  split+expl
+  mutate
+  bounce
+  none
+  
+trigger
+  top
+  speed
+  prox
+  hit
+  
+explosion
+  
+

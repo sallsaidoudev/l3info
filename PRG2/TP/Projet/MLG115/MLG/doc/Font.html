@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Console.html">
+<link rel="next" href="Helpers.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Console" rel="Chapter" href="Console.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Helpers" rel="Chapter" href="Helpers.html">
+<link title="Input" rel="Chapter" href="Input.html">
+<link title="Input_edit" rel="Chapter" href="Input_edit.html">
+<link title="Keys" rel="Chapter" href="Keys.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Net" rel="Chapter" href="Net.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Serialize" rel="Chapter" href="Serialize.html">
+<link title="Socket" rel="Chapter" href="Socket.html">
+<link title="Sprite" rel="Chapter" href="Sprite.html">
+<link title="Tcp" rel="Chapter" href="Tcp.html">
+<link title="Udp" rel="Chapter" href="Udp.html">
+<link title="Vector" rel="Chapter" href="Vector.html">
+<link title="Video" rel="Chapter" href="Video.html"><title>Font</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Console.html" title="Console">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Helpers.html" title="Helpers">Next</a>
+</div>
+<h1>Module <a href="type_Font.html">Font</a></h1>
+
+<pre><span class="keyword">module</span> Font: <code class="code">sig</code> <a href="Font.html">..</a> <code class="code">end</code></pre><div class="info module top">
+Module <code class="code">Font</code> keeps a type representing any font type and all functions
+   that work with this type<br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+<div class="info ">
+type representing a common font type<br>
+</div>
+
+
+<pre><span id="EXCEPTIONError"><span class="keyword">exception</span> Error</span> <span class="keyword">of</span> <code class="type">string</code></pre>
+<div class="info ">
+Exception raised when any font associated functions fail<br>
+</div>
+
+<pre><span id="VALload"><span class="keyword">val</span> load</span> : <code class="type">?color:(Sdlvideo.color * int -> Sdlvideo.color * int) -><br>       ?alpha:bool -> string -> <a href="Font.html#TYPEt">t</a></code></pre><div class="info ">
+<code class="code">load file</code> returns font loaded from <code class="code">file</code> in sfont format<br>
+</div>
+
+<pre><span id="VALdraw_char"><span class="keyword">val</span> draw_char</span> : <code class="type">?on:<a href="Video.html#TYPEt">Video.t</a> -> ?surf:Sdlvideo.surface -> <a href="Font.html#TYPEt">t</a> -> int -> int -> char -> unit</code></pre><div class="info ">
+<code class="code">draw_char ?cntx font x y c</code> draws character <code class="code">c</code> with font <code class="code">font</code> on <code class="code">x, y</code>
+   coordinates on context <code class="code">cntx</code><br>
+</div>
+
+<pre><span id="VALdraw_string"><span class="keyword">val</span> draw_string</span> : <code class="type">?on:<a href="Video.html#TYPEt">Video.t</a> -><br>       ?surf:Sdlvideo.surface -><br>       <a href="Font.html#TYPEt">t</a> -> int -> int -> ?cursor:int -> string -> unit</code></pre><div class="info ">
+<code class="code">draw_string ?cntx fnt x y str</code> draws given string <code class="code">str</code> with font <code class="code">font</code> 
+   at <code class="code">x, y</code> coordinates on context <code class="code">cntx</code>. This function works like
+   <a href="Font.html#VALdraw_char"><code class="code">Font.draw_char</code></a>, but with whole string.<br>
+</div>
+
+<pre><span id="VALheight"><span class="keyword">val</span> height</span> : <code class="type"><a href="Font.html#TYPEt">t</a> -> int</code></pre><div class="info ">
+<code class="code">height font</code> returns height of font <code class="code">font</code><br>
+</div>
+
+<pre><span id="VALwidth"><span class="keyword">val</span> width</span> : <code class="type"><a href="Font.html#TYPEt">t</a> -> string -> int</code></pre><div class="info ">
+<code class="code">width font str</code> returns width of string <code class="code">str</code> written in font <code class="code">font</code><br>
+</div>
+
+<pre><span id="VALdivide_string"><span class="keyword">val</span> divide_string</span> : <code class="type"><a href="Font.html#TYPEt">t</a> -> string -> int -> string list</code></pre><div class="info ">
+<code class="code">divide_string fnt str max_w</code><br>
+</div>
+</body></html>

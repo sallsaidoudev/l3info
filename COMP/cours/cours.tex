@@ -1,0 +1,260 @@
+\documentclass[a4paper]{article}
+
+\title{Compilation}
+\author{Anne Grazon -- L3 Info Rennes 1}
+\date{2015 -- 2016, S2}
+
+\input{../../tex/les_header.tex}
+\usepackage{tikz}
+\makeatletter
+\renewcommand{\paragraph}{%
+  \@startsection{paragraph}{4}%
+  {\z@}{0ex \@plus 1ex \@minus .2ex}{-1em}%
+  {\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+\begin{document}
+
+\maketitle
+
+% 04/01/16
+\section{Programmation par automate à états finis}
+
+\subsection{Programmation dirigée par la syntaxe}
+Les données doivent suivre des règles d'écriture précises (syntaxe), pas toujours simples.
+\begin{ex}\begin{tabular}{c|c}
+	Logiciel & Données \\ \hline
+	Compilateur & Programme Java \\
+	SGBD & Requêtes \\
+\end{tabular}\end{ex}
+
+Les logiciels doivent vérifier que les données respectent la syntaxe souhaitée (analyse syntaxique) ; c'est nécessaire mais pas suffisant, on veut ajouter des traitements sur les données (produire un exécutable, des réponses aux requêtes de BDD). On doit donc prévoir des actions pour réaliser ces traitements ; l'analyseur syntaxique \og pilote \fg\ les actions.
+
+L'ensemble des données satisfaisant les contraintes de syntaxe est appelé langage d'entrée.
+\rem{On utilise les outils formels pour décrire un langage (pour éviter les ambiguïtés et pouvoir programmer une solution plus facilement).}
+
+\begin{ex}Langage des fiches de cotation (voir support).\end{ex}
+
+On distingue deux types de contraintes sur les données :\begin{itemize}
+	\item celles qui définissent l'écriture d'un item (\textit{token}), les contraintes lexicales ;
+	\item celles qui précisent l'organisation des items, les contraintes syntaxiques.
+\end{itemize}
+L'analyseur des données est donc constitué d'un analyseur lexical qui découpe la suite de caractères (seules données considérées dans ce cours) en items qui ont un sens pour l'application concernée, et d'un analyseur syntaxique qui vérifie que la séquence de ces items est correcte.
+
+\subsection{Description formelle d'un langage}
+La définition d'un langage nécessite la connaissance des entités admises (vocabulaire terminal, noté $V_T$) et des règles indiquant quelles séquences de $V_T^*$ sont admises.
+
+\begin{ex}Pour le langage support : au niveau lexical $V_T=\{$`a'-`z', `0'-`9', `+', `--', ESP, RC, `;', `/', `.'\}, au niveau syntaxique $V_T=$\{ancien, nouveau, par, ident, nbentier, nbreel, `+', `--', `;', `/'\}.\end{ex}
+
+\paragraph{Expressions régulières} On ajoute les notations $w^+ = w.w^*, w^? = w|\epsilon$ ; [\textbf{exo 1}] donner les expressions régulières pour définir les items nbentier et nbreel, et l'ensemble des fiches de cotation du langage support.\begin{itemize}
+	\item nbentier : (`0'-`9')$^+$ ;
+	\item nbreel : (`0'-`9')$^+(\epsilon | $.(`0'-`9')$^*)$ ;
+	\item fiches : (ident (par nbentier)$^?$ (ancien nbreel nouveau (`+'|`--')$^?$ nbreel | nouveau nbreel)`;')$^*$`/'.
+\end{itemize}
+Le mécanisme de reconnaissance adapté est l'automate à états finis ; c'est toujours le cas pour l'analyseur lexical, parfois pour l'analyseur syntaxique.
+
+\paragraph{Grammaires algébriques ou hors-contexte} Pour $G=<\Sigma, V, S, P>$, $L(G) = \{w\in\Sigma^*|S\rightarrow^+_Pw\}$.
+
+\subsection{Automate fini et actions}
+
+\paragraph{Graphe des transitions} Les notations sont standard. On se limite à des automates déterministes. Pour la numérotation des états, on prend la convention suivante : l'état initial est 0, le final est le plus grand nombre, les autres sont numérotés consécutivement.
+
+\begin{figure}[h]\center
+\begin{tikzpicture}[scale=0.18]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (6.9,-22.8) circle (3);
+\draw (6.9,-22.8) node {$0$};
+\draw [black] (20.3,-22.8) circle (3);
+\draw (20.3,-22.8) node {$1$};
+\draw [black] (30.3,-22.8) circle (3);
+\draw (30.3,-22.8) node {$2$};
+\draw [black] (47.4,-22.8) circle (3);
+\draw (47.4,-22.8) node {$3$};
+\draw [black] (60.4,-22.8) circle (3);
+\draw (60.4,-22.8) node {$4$};
+\draw [black] (76.1,-22.8) circle (3);
+\draw (76.1,-22.8) node {$5$};
+\draw [black] (76.1,-35.9) circle (3);
+\draw (76.1,-35.9) node {$8$};
+\draw [black] (56.6,-35.9) circle (3);
+\draw (56.6,-35.9) node {$7$};
+\draw [black] (56.6,-49.4) circle (3);
+\draw (56.6,-49.4) node {$9$};
+\draw [black] (44.3,-35.9) circle (3);
+\draw (44.3,-35.9) node {$6$};
+\draw [black] (6.9,-35.9) circle (3);
+\draw (6.9,-35.9) node {$10$};
+\draw [black] (6.9,-35.9) circle (2.4);
+\draw [black] (2,-22.8) -- (3.9,-22.8);
+\draw (1.5,-22.8) node [left] {$0$};
+\fill [black] (3.9,-22.8) -- (3.1,-22.3) -- (3.1,-23.3);
+\draw [black] (9.9,-22.8) -- (17.3,-22.8);
+\fill [black] (17.3,-22.8) -- (16.5,-22.3) -- (16.5,-23.3);
+\draw (13.6,-23.3) node [below] {$ident\mbox{ }1$};
+\draw [black] (23.3,-22.8) -- (27.3,-22.8);
+\fill [black] (27.3,-22.8) -- (26.5,-22.3) -- (26.5,-23.3);
+\draw (25.3,-23.3) node [below] {$par$};
+\draw [black] (33.3,-22.8) -- (44.4,-22.8);
+\fill [black] (44.4,-22.8) -- (43.6,-22.3) -- (43.6,-23.3);
+\draw (38.85,-23.3) node [below] {$nbentier\mbox{ }2$};
+\draw [black] (50.4,-22.8) -- (57.4,-22.8);
+\fill [black] (57.4,-22.8) -- (56.6,-22.3) -- (56.6,-23.3);
+\draw (53.9,-23.3) node [below] {$ancien$};
+\draw [black] (63.4,-22.8) -- (73.1,-22.8);
+\fill [black] (73.1,-22.8) -- (72.3,-22.3) -- (72.3,-23.3);
+\draw (68.25,-23.3) node [below] {$nbreel\mbox{ }5$};
+\draw [black] (76.1,-25.8) -- (76.1,-32.9);
+\fill [black] (76.1,-32.9) -- (76.6,-32.1) -- (75.6,-32.1);
+\draw (75.6,-29.35) node [left] {$nouveau$};
+\draw [black] (73.1,-35.9) -- (59.6,-35.9);
+\fill [black] (59.6,-35.9) -- (60.4,-36.4) -- (60.4,-35.4);
+\draw (66.35,-35.4) node [above] {$+\mbox{ }-\mbox{ }6/7$};
+\draw [black] (56.6,-38.9) -- (56.6,-46.4);
+\fill [black] (56.6,-46.4) -- (57.1,-45.6) -- (56.1,-45.6);
+\draw (56.1,-42.65) node [left] {$nbreel\mbox{ }9$};
+\draw [black] (73.63,-37.61) -- (59.07,-47.69);
+\fill [black] (59.07,-47.69) -- (60.01,-47.65) -- (59.44,-46.83);
+\draw (61.95,-42.15) node [above] {$nbreel\mbox{ }11$};
+\draw [black] (53.747,-48.486) arc (-113.20382:-162.12218:15.783);
+\fill [black] (53.75,-48.49) -- (53.21,-47.71) -- (52.81,-48.63);
+\draw (47.76,-46.07) node [left] {$nbreel\mbox{ }11$};
+\draw [black] (41.322,-35.543) arc (-99.43791:-137.81645:33.121);
+\fill [black] (41.32,-35.54) -- (40.62,-34.92) -- (40.45,-35.9);
+\draw (25.16,-32.46) node [below] {$nouveau\mbox{ }3$};
+\draw [black] (46.71,-25.72) -- (44.99,-32.98);
+\fill [black] (44.99,-32.98) -- (45.66,-32.32) -- (44.69,-32.09);
+\draw (45.09,-28.93) node [left] {$nouveau$};
+\draw [black] (53.606,-49.588) arc (-88.08096:-148.23142:51.153);
+\fill [black] (8.4,-25.4) -- (8.4,-26.34) -- (9.25,-25.81);
+\draw (25.32,-44.07) node [below] {$;\mbox{ }12$};
+\draw [black] (6.9,-25.8) -- (6.9,-32.9);
+\fill [black] (6.9,-32.9) -- (7.4,-32.1) -- (6.4,-32.1);
+\draw (6.4,-29.35) node [left] {$/\mbox{ }13$};
+\draw [black] (22.917,-21.335) arc (116.99689:63.00311:38.403);
+\fill [black] (57.78,-21.34) -- (57.3,-20.53) -- (56.84,-21.42);
+\draw (40.35,-16.65) node [above] {$ancien\mbox{ }3$};
+\end{tikzpicture}
+\caption{Automate associé aux fiches de cotations. Les numéros qui étiquettent certaines transitions correspondent aux actions (voir paragraphe suivant).}\end{figure}
+
+\paragraph{Actions associées aux transitions} L'objectif est de reconnaître si une donnée appartient au langage et surtout de traiter la donnée. Par exemple, on peut vouloir calculer le cours le plus haut pour chaque monnaie. Pour cela, on exécutera des actions sur certaines transitions ; on leur associe alors un numéro d'action. Par convention, $-1$ désigne l'action vide et 0 l'action d'initialisation.
+
+Pour pouvoir traiter une donnée, on a besoin d'accéder à des informations supplémentaires pour certains items lexicaux (par exemple la valeur associée à un item nbentier ou nbreel). Ces informations sont des attributs lexicaux.
+
+\subsection{Programmation d'un automate fini déterministe}
+
+\paragraph{Programmation directe} Pour des automates simples comme ceux d'analyse lexicale, on peut programmer directement l'automate. La mise en \oe uvre utilisée en TD/TP définit une classe abstraite, Lex qui modélise un analyseur lexical abstrait par la définition d'un flot d'entrée, d'une table des identificateurs et les méthodes abstraites d'accès à un item lexical (\verb?abstract int lireSymb()?) ou à un identificateur (\verb?abstract String repId(int nId)?).
+
+\begin{figure}[ht]\center
+\begin{tikzpicture}[scale=0.1]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (7.6,-26.5) circle (3);
+\draw [black] (38.1,-16.9) circle (3);
+\draw [black] (65.1,-26.5) circle (3);
+\draw [black] (65.1,-26.5) circle (2.4);
+\draw [black] (32.9,-26.5) circle (3);
+\draw [black] (19.1,-42.6) circle (3);
+\draw [black] (40.8,-39.6) circle (3);
+\draw [black] (9.892,-24.565) arc (127.89812:87.0451:37.881);
+\fill [black] (35.11,-16.63) -- (34.34,-16.09) -- (34.29,-17.09);
+\draw (18.94,-17.68) node [above] {lettre};
+\draw [black] (2.5,-26.5) -- (4.6,-26.5);
+\fill [black] (4.6,-26.5) -- (3.8,-26) -- (3.8,-27);
+\draw [black] (36.777,-14.22) arc (234:-54:2.25);
+\draw (38.1,-9.65) node [above] {lettre};
+\fill [black] (39.42,-14.22) -- (40.3,-13.87) -- (39.49,-13.28);
+\draw [black] (41.091,-17.125) arc (83.9423:56.91145:48.926);
+\fill [black] (62.64,-24.79) -- (62.24,-23.93) -- (61.7,-24.77);
+\draw [black] (10.6,-26.5) -- (29.9,-26.5);
+\fill [black] (29.9,-26.5) -- (29.1,-26) -- (29.1,-27);
+\draw (20.25,-26) node [above] {$+\mbox{ }-\mbox{ };$};
+\draw [black] (35.9,-26.5) -- (62.1,-26.5);
+\fill [black] (62.1,-26.5) -- (61.3,-26) -- (61.3,-27);
+\draw [black] (16.767,-40.716) arc (-131.65301:-157.27163:31.588);
+\fill [black] (16.77,-40.72) -- (16.5,-39.81) -- (15.84,-40.56);
+\draw (11.47,-36.85) node [left] {chiffre};
+\draw [black] (22.07,-42.19) -- (37.83,-40.01);
+\fill [black] (37.83,-40.01) -- (36.97,-39.63) -- (37.1,-40.62);
+\draw (29.69,-40.53) node [above] {$.$};
+\draw [black] (20.423,-45.28) arc (54:-234:2.25);
+\draw (19.1,-49.85) node [below] {chiffre};
+\fill [black] (17.78,-45.28) -- (16.9,-45.63) -- (17.71,-46.22);
+\draw [black] (39.477,-36.92) arc (234:-54:2.25);
+\draw (40.8,-32.35) node [above] {chiffre};
+\fill [black] (42.12,-36.92) -- (43,-36.57) -- (42.19,-35.98);
+\draw [black] (43.44,-38.18) -- (62.46,-27.92);
+\fill [black] (62.46,-27.92) -- (61.52,-27.86) -- (61.99,-28.74);
+\draw [black] (64.192,-29.358) arc (-20.55487:-120.86503:29.392);
+\fill [black] (64.19,-29.36) -- (63.44,-29.93) -- (64.38,-30.28);
+\draw [black] (8.659,-23.694) arc (156.48118:23.51882:30.2);
+\fill [black] (64.04,-23.69) -- (64.18,-22.76) -- (63.26,-23.16);
+\draw (36.35,-5.05) node [above] {$/$};
+\end{tikzpicture}
+\caption{Automate d'analyse lexicale du langage support.}\end{figure}
+
+Pour les chaînes de lettres, on attend la fin de la chaîne avant de déterminer si c'est un mot réservé ou un identificateur de monnaie.
+
+\paragraph{Programmation par tables} On utilise cette implémentation pour tout automate plus complexe (analyse syntaxique par exemple). On programme la table des transitions ainsi que la table des actions (pour chacune, une ligne par état, un colonne par item syntaxique possible en sortant de cet état). Ces tables sont ensuite interprétées par au niveau de la classe abstraite Automate, qui effectue l'analyse des données en s'en servant et en utilisant la fonction \verb?lireSymb()? qui fournit l'item lexical courant.
+
+Il ne faut pas oublier une action traitant les erreurs ; l'action d'initialisation, elle, est traitée à part (méthode \verb?initAction? de la classe abstraite Automate).
+
+\paragraph{Traitement des erreurs} Au niveau lexical, on renvoie l'item correspondant à une erreur. Au niveau syntaxique, la table des transitions renvoie vers un état d'erreur. Soit l'erreur est considérée comme fatale et on arrête l'analyse ; soit on veut récupérer la situation et par exemple continuer l'analyse à la prochaine expression.
+
+Dans ce cas, toute éventuelle mise à jour doit être faite uniquement à la fin d'une analyse correcte et on doit prendre garde au cas où l'erreur correspond à une fin d'expression. Une idée pour gérer ce cas plus complexe consiste à établir des symboles de reprise ; si une erreur de syntaxe survient lors de la lecture d'un de ces symboles, on la signale et on reprend l'analyse directement.
+
+\section{Analyse syntaxique descendante de gauche à droite (LR)}
+
+\subsection{Limite des automates finis}
+
+Les automates finis sont adaptés aux langages réguliers ; or les langages des programmations doivent gérer par exemple le parenthésage et la cohérence des accolades. L'analyse de tels langages nécessite un automate à pile, utilisé alors pour l'analyse syntaxique d'une donnée.
+
+\subsection{Cas particulier : les grammaires d'expressions}
+
+On souhaite éviter l'ambiguïté : une grammaire est ambiguë s'il peut exister plusieurs arbres syntaxiques pour une même donnée. Cette situation n'est pas acceptable pour la compilation ; on la résout en évitant la double récursivité dans les règles ($X \rightarrow \alpha X$ et $X \rightarrow X \alpha$) et en respectant la priorité des opérateurs (en cas de priorité identique, on fera l'évaluation de gauche à droite).
+
+\begin{ex}
+Une grammaire non ambiguë pour les expressions arithmétiques :\begin{itemize}
+\item[ ] exp $\rightarrow$ exp $+$ terme | exp $-$ terme | terme
+\item[ ] terme $\rightarrow$ terme $*$ prim | term $/$ prim | prim
+\item[ ] prim $\rightarrow$ nb | (exp)\end{itemize}
+\end{ex}
+
+\subsection{Analyseur descendant LR procédural - Points de génération}
+
+La machine adaptée à l'analyse de langages algébriques est l'automate à pile (il réalise une analyse descendante LR du langage généré par une grammaire algébrique). En partant de l'axiome, elle essaie d'obtenir la chaîne à analyser par dérivations successives à gauche (on a $L(G)=\{x\in\Sigma^*|S\rightarrow^+_gx\}$).
+\rem{L'outil utilisé en TP, ANTLR, génère un analyseur syntaxique LR à partir d'une grammaire donnée (ainsi qu'un analyseur lexical).}
+
+L'analyse LR nécessite la notion de pile qui mémorise ce qui reste à faire. Une mise en \oe uvre consiste à utiliser des procédures pour \og programmer\fg\ les règles de la grammaire, avec une procédure pour chaque non-terminal (la grammaire doit respecter certaines propriétés, notamment $LL(1)$ pour l'ambiguïté). La pile est alors simulée par les appels et retours de procédure ; quand les appels se terminent sans erreur et que la chaîne est totalement analysée, c'est le win, sinon, c'est la lose.
+
+On peut ajouter des actions dans les règles de la grammaire, pour traiter la donnée en parallèle de sa reconnaissance. Ces actions sont ici appelées \og points de génération\fg\ (notés par un numéro \textit{as usual}).
+
+\section{\'Eléments de compilation}
+
+\subsection{Compilateur considéré}
+
+\paragraph{Structure du compilateur} Le langage d'entrée (langage Projet) est impératif ; il gère :\begin{itemize}
+\item les identificateurs de variables et de constantes ;
+\item les valeurs entières et booléennes ;
+\item l'affectation (notée \verb?:=?) ;
+\item les expressions arithmétiques ou booléennes (avec $+, -, *$, div, et, ou, non et comparaisons) ;
+\item les structures conditionnelles, l'itération et un switch \og à la Java\fg\ ;
+\item lecture et écriture ;
+\item des procédures sans résultat (paramètres modifiables et/ou fixes) ;
+\item des programmes et modules. \end{itemize}
+La compilation d'un programme \verb?p.pro? en code objet \verb?p.obj? se fait au moyen du compilateur à réaliser. Ce code objet peut ensuite être exécuté par une machine à pile MAPILE (fournie, avec 30 ordres).
+
+\paragraph{Réalisation du compilateur} Le langage d'entrée est spécifié par sa syntaxe (règles d'écriture du programme source) et sa sémantique (signification donnée à chaque construction syntaxique). La syntaxe se décompose en une grammaire donnée, et des contraintes non exprimables par une grammaire algébrique (délégation de déclaration, ...). L'analyseur syntaxique est un automate à pile dont les contrôles supplémentaires sont fournis par des points de génération. La sémantique est la séquences d'ordres MAPILE générée à partir du programme source. Le code objet est également produit par les points de génération.
+
+\subsection{Table des symboles - Compilation des déclarations}
+
+Elle permet de traiter les déclarations et l'utilisation des identifiants déclarés. En particulier, elle contient le type et la catégorie des identifiants (variable, constante...) ainsi qu'un champ d'information (adresse d'une variable dans la pile d'exécution, valeur d'une constante).
+
+Le code objet doit en outre fournir un tableau \verb?po? dans lequel sont rangés les ordres MAPILE au fur et à mesure de la compilation. Ce tableau est recopié dans un fichier en fin de compilation. (Les ordres MAPILE sont codés par des entiers auxquels sont associées des constantes à utiliser dans le code du projet.)
+
+\subsection{Expressions et contrôles de type (TP)}
+
+\subsection{Compilation des instructions}
+
+Les instructions \verb?si?, \verb?ttq? et \verb?cond? nécessitent des branchements \og en avant\fg\ (à des adresses inconnues au moment où on fait le branchement BINCOND ou BSIFAUX) ; il faut mémoriser des emplacements du code objet (indices de \verb?po?) et gérer l'imbrication de ces instructions, au moyen d'une pile nommée \verb?pileRep?.
+
+\end{document}

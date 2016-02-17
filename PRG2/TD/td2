@@ -1,0 +1,54 @@
+Exo 1
+type ori = Nord | Sud | Est | Ouest;;
+type pinceau = Leve | Pose;;
+type robot = {mutable x:int; mutable y:int; mutable tete:ori; mutable etat:pinceau};;
+
+Exo 2
+type cote = Gauche | Droite;;
+type programme = Nop | Tourner of cote | Avancer of int | Pinceau;;
+
+Exo 3
+let rec execute rob prg = match prg with
+	| Nop -> rob
+	| Tourner c when c = Gauche -> (match rob.tete with
+		| Nord -> {rob with tete = Ouest}
+		| Ouest -> rob.tete <- Sud; rob
+		| Sud -> rob.tete <- Est; rob
+		| Est -> rob.tete <- Nord; rob)
+	| Tourner _-> (match rob.tete with
+		| Nord -> rob.tete <- Est; rob
+		| Est -> rob.tete <- Sud; rob
+		| Sud -> rob.tete <- Ouest; rob
+		| Ouest -> rob.tete <- Nord; rob)
+	| Avancer n -> (match rob.tete with
+		| Nord -> rob.y <- rob.y + n; rob
+		| Sud -> rob.y <- rob.y - n; rob
+		| Est -> rob.x <- rob.x + n; rob
+		| Ouest -> rob.x <- rob.x - n; rob)
+	| Pinceau -> if rob.etat = Leve then rob.etat <- Pose else rob.etat <- Leve; rob
+	| Seq l -> (match l with
+		| [] -> rob
+		| t::q -> execute (execute rob t) (Seq q))
+	| Loop (n, p) -> (match n with
+		| 0 -> rob
+		| _ -> execute (execute rob p) (Loop(n-1, p)))
+;;
+
+Exo 4
+type programme = Nop | Tourner of cote | Avancer of int | Pinceau | Seq of programme list | Loop of int * programme;;
+
+Exo 5
+let carre50 = Seq([Pinceau; Loop(4, Seq([Avancer(50); Tourner(Gauche)]))]);;
+
+Exo 6
+(...)
+
+Exo 7
+type 'a option = None | Some of 'a;;
+let rec assoc k l = match l with
+	| [] -> None
+	| (j,v)::_ when j=k -> Some(v)
+	| _::q -> assoc k q
+;;
+
+Exo 8 et 9 la FLEEEEEEMME

@@ -1,0 +1,71 @@
+My OCaml coding style, version 4.5, Cezary Kaliszyk
+
+Names:
+- Names are lowercase
+- Separate multiple words in name written with underscores
+- Size of first letter is given by language semantics
+
+Indentation:
+- 2 spaces.
+- Increase indentation after every opened construction:
+    let, match..with, function, if..then..else, (..), type, 
+    for..do, while..do, try..with, module, class (maybe some more)
+- "in" stays in the same line as let unless it closes a large block
+- "and" is written with construction after it
+- Close highest level constructions with ";;" indented like "in"
+
+Code readability:
+- Name complicated expressions using let..in (compiler will optimize it)
+  ie: let sth = complicated_expression in f 1 sth;;
+- Open only reaaly often used modules, with no name clashes.
+- Never give two modules the same name
+- Write operators separately but for:
+  - brackets which are sticked to its interior
+  - "!" which is sticked to its argument (word to the right)
+  - "," ";" ";;" which are sticked to the word on the left
+- Use "incr" and "decr", but don't use "succ" and "pred".
+- If we use an operator as a function, use brackets, like: (<)
+
+Avoiding Errors:
+
+- When mixing imperative and functional styles or double matching use brackets
+  or begin..end like:
+  "match a with 
+    | 0 ->
+        begin match b with 
+        | 3 -> 7
+        | _ -> 0
+        end
+    | _ -> 3")
+  or close constructions like "if .. then .. else ()", use the unnecesay "else"
+- Avoid warnings
+- Don't be afraid of "assert" (compilator -noassert flag)
+- Check std library exceptions, like Not_found
+- Don't use dangerous constructions like Obj.magic
+- Use "input_value" and "output_value" only if in both modules it is typed
+
+Comments:
+- In interfaces, before the function.
+- What exceptions does it raise, what other funs does it use, what use it.
+- Provide interfaces only for things accessed from outside the module
+
+Performance:
+- Don't use "^" i "@" often. Use String.concat, List.concat, Buffer instead
+- If parameters are not combined do not use tuples
+  ("let f a b c = sth" instead of "let f (a, b, c) = sth")
+- If possible use "match" and "function" instead of "if"
+- Use tail recursion (constant stack space).
+
+Ocaml syntax:
+- Try to do initialization inside module (Will be called in compilation order)
+- Avoid recursive modules
+
+Automatic:
+- vim highlights ocaml syntax
+- emacs has a special mode for ocaml with even more good stuff
+- camlp4 can pretty-print ocaml code, but looses comments inside functions.
+
+Makefile:
+
+  Should use the included OMakefile. The FILES should be dependency ordered.
+  Intermediate object file's will be in out subdirectory.

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Sprite.Table.html">
+<link rel="Up" href="Sprite.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Console" rel="Chapter" href="Console.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Helpers" rel="Chapter" href="Helpers.html">
+<link title="Input" rel="Chapter" href="Input.html">
+<link title="Input_edit" rel="Chapter" href="Input_edit.html">
+<link title="Keys" rel="Chapter" href="Keys.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Net" rel="Chapter" href="Net.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Serialize" rel="Chapter" href="Serialize.html">
+<link title="Socket" rel="Chapter" href="Socket.html">
+<link title="Sprite" rel="Chapter" href="Sprite.html">
+<link title="Tcp" rel="Chapter" href="Tcp.html">
+<link title="Udp" rel="Chapter" href="Udp.html">
+<link title="Vector" rel="Chapter" href="Vector.html">
+<link title="Video" rel="Chapter" href="Video.html"><title>Sprite.Set</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="Sprite.html" title="Sprite">Up</a>
+&nbsp;<a class="post" href="Sprite.Table.html" title="Sprite.Table">Next</a>
+</div>
+<h1>Module <a href="type_Sprite.Set.html">Sprite.Set</a></h1>
+
+<pre><span class="keyword">module</span> Set: <code class="code">sig</code> <a href="Sprite.Set.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">int -> 'a <a href="Sprite.html#TYPEset">Sprite.set</a></code></pre><div class="info ">
+<code class="code">create size</code> creates a set of sprites.<br>
+</div>
+
+<pre><span id="VALadd"><span class="keyword">val</span> add</span> : <code class="type">'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> 'a <a href="Sprite.html#TYPEt">Sprite.t</a> -> unit</code></pre><div class="info ">
+<code class="code">add set sprite</code> adds <code class="code">sprite</code> to <code class="code">set</code>. It does nothing if it was
+     already in the set<br>
+</div>
+
+<pre><span id="VALdel"><span class="keyword">val</span> del</span> : <code class="type">'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> 'a <a href="Sprite.html#TYPEt">Sprite.t</a> -> unit</code></pre><div class="info ">
+<code class="code">del set sprite</code> removes <code class="code">sprite</code> from the given <code class="code">set</code><br>
+</div>
+
+<pre><span id="VALclear"><span class="keyword">val</span> clear</span> : <code class="type">'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> unit</code></pre><div class="info ">
+<code class="code">clear set</code> removes all sprites from the given set.<br>
+</div>
+
+<pre><span id="VALiter"><span class="keyword">val</span> iter</span> : <code class="type">('a <a href="Sprite.html#TYPEt">Sprite.t</a> -> unit) -> 'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> unit</code></pre><div class="info ">
+<code class="code">iter fnctn set</code> iterates a function over a set. The function may
+     safely remove the sprite it operates on.<br>
+</div>
+
+<pre><span id="VALiter_data"><span class="keyword">val</span> iter_data</span> : <code class="type">('a <a href="Sprite.html#TYPEt">Sprite.t</a> -> 'a -> unit) -> 'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> unit</code></pre>
+<pre><span id="VALset_boundary"><span class="keyword">val</span> set_boundary</span> : <code class="type">'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> int -> int -> int -> int -> unit</code></pre><div class="info ">
+<code class="code">set_set_boundary min_x max_x min_y max_y</code><br>
+</div>
+
+<pre><span id="VALset_collision"><span class="keyword">val</span> set_collision</span> : <code class="type">'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> int -> int -> unit</code></pre><div class="info ">
+<code class="code">set_collision set width height</code> creates collision structures for 
+     set <code class="code">set</code> with bucket size set to <code class="code">(width, height)</code>.<br>
+</div>
+
+<pre><span id="VALmem"><span class="keyword">val</span> mem</span> : <code class="type">'a <a href="Sprite.html#TYPEset">Sprite.set</a> -> 'a <a href="Sprite.html#TYPEt">Sprite.t</a> -> bool</code></pre><div class="info ">
+<code class="code">mem set sprite</code><br>
+<b>Returns</b> true if <code class="code">sprite</code> is in <code class="code">set</code><br>
+</div>
+
+<pre><span id="VALfold"><span class="keyword">val</span> fold</span> : <code class="type">('a -> 'b <a href="Sprite.html#TYPEt">Sprite.t</a> -> 'a) -> 'b <a href="Sprite.html#TYPEset">Sprite.set</a> -> 'a -> 'a</code></pre><div class="info ">
+<code class="code">fold fnctn set value</code> folds a function through a set. The function may
+     safely remove the sprite it operates on.<br>
+</div>
+
+<pre><span id="VALfold_data"><span class="keyword">val</span> fold_data</span> : <code class="type">('a -> 'b <a href="Sprite.html#TYPEt">Sprite.t</a> -> 'b -> 'a) -> 'b <a href="Sprite.html#TYPEset">Sprite.set</a> -> 'a -> 'a</code></pre></body></html>

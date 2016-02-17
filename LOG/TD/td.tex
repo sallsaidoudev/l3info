@@ -1,0 +1,77 @@
+\documentclass[a4paper]{article}
+
+\input{../../tex/les_header.tex}
+
+\newcounter{noexo}
+\newcommand{\exo}{\stepcounter{noexo} \paragraph{Exercice \thenoexo} ~\\ ~\\}
+
+\title{Logique -- TD}
+\author{Sophie Pinchinat -- L3 Info Rennes 1}
+\date{2015 -- 2016, S2}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{TD1}
+
+\exo
+Soit $\phi$ valide, $mod(\phi) = Val$ et comme (cours) $mod(\neg\phi)=Val\setminus mod(\phi)= Val\setminus Val=\emptyset$, $\neg\phi$ n'est pas satisfiable. Réciproquement, $mod(\neg\phi) = \emptyset \Rightarrow mod(\phi) = mod(\neg\neg\phi) = Val\setminus mod(\neg\phi) = Val\setminus\emptyset = Val$ et $\phi$ est valide ; d'où (1).
+
+$\exists\nu\in mod(\phi) \Leftrightarrow mod(\neg\phi) = Val\setminus mod(\phi) \subsetneq Val$ (2)
+
+\exo
+$var(\phi)\subseteq X$ et $\nu_X=\nu'_X$ donc $\nu_{var(\phi)}=\nu'_{var(\phi)}$, d'où $\nu(\phi) = \nu'(\phi)$.
+
+\exo
+Pour toute proposition $\phi\equiv p$, $\phi^*\equiv\neg p\equiv\neg\phi$ donc la propriété est vraie. Soient $\phi$ et $\psi$ qui vérifient la propriété, alors $\phi\vee\psi$ se transforme en $\neg\phi\wedge\neg\psi$ et $\neg(\neg\phi\wedge\neg\psi)\equiv\neg\neg(\phi\vee\psi)\equiv\phi\vee\phi$ (calcul identique pour $\wedge$ transformé en $\vee$). Donc la propriété est vraie pour toute formule.
+
+\exo
+Tout d'abord, on a $p\rightarrow q\equiv (\neg p)\vee q$ donc toute formule contenant le signe $\rightarrow$ peut s'écrire sans, et $\{\neg,\wedge,\vee\}\equiv\{\neg,\wedge,\vee,\rightarrow\}$. Ensuite, comme vu précédemment, $p\wedge q=\neg(\neg p \vee \neg q)$ donc de même, $\{\neg, \vee\}\equiv\{\neg,\wedge,\vee\}$ (+transitivité). Ajoutons que $\{\neg\}\sqsubset\{\neg,\vee\}$ (évident) et on obtient $$\{\neg\}\sqsubset\{\neg,\vee\}\equiv\{\neg,\wedge,\vee,\rightarrow\}$$ (et plus généralement, $\neg$ et $\vee$ (ou $\wedge$, calculs analogues) suffisent à écrire toute formule de calcul propositionnel).
+
+\subsection*{TD2}
+\setcounter{noexo}{0}
+
+\exo
+$\Gamma\models\varphi$ donne par définition $mod(\Gamma)\subseteq mod(\varphi)$. Soit $\nu$ une valuation modèle de $\Gamma\cup\{\neg\varphi\}$ ; cette valuation est aussi un modèle du sous-ensemble $\Gamma$ et donc de $\varphi$ d'après l'inclusion précédente. Alors $\nu(\varphi)=1$ et $\nu(\neg\varphi)=1$, ce qui est impossible. Il n'existe donc aucun modèle pour $\Gamma\cup\{\neg\varphi\}$, cet ensemble de formules est contradictoire.
+
+Réciproquement, soit $\nu$ un modèle de $\Gamma$ ; si $\nu(\varphi)=0$, alors $\nu(\neg\varphi)=1$ et $\nu$ satisfait $\Gamma\cup\{\neg\varphi\}$, ce qui est impossible. Donc $\nu(\varphi)=1$, $\nu$ est un modèle de $\varphi$ et on a bien $\Gamma\models\varphi$.
+
+\exo
+Soit $\nu\in mod(\Sigma\cup\Gamma)$ ; $\forall\psi\in\Sigma, \psi\in\Sigma\cup\Gamma$ donc $\nu(\psi)=1$ donc $\nu\in mod(\Sigma)$ et par un calcul similaire, $\nu\in mod(\Gamma)$. Ainsi, $\nu\in mod(\Sigma)\cap mod(\Gamma)$.
+
+Réciproquement, soit $\nu\in mod(\Sigma)\cap mod(\Gamma)$. $\forall\varphi\in\Sigma\cup\Gamma$, si $\varphi\in\Sigma$, alors $\nu(\varphi)=1$ puisque $\nu\in mod(\Sigma)$ ; si $\varphi\in\Gamma$, le calcul est analogue et donc on a bien $\nu\in mod(\Sigma\cup\Gamma)$. Ainsi, $mod(\Sigma\cup\Gamma)= mod(\Sigma)\cap mod(\Gamma)$.
+
+\exo
+1. $\Gamma_2=\{\varphi_1,\varphi_2\}$ est une telle simplification de $\Gamma_1$ ; en effet, tout modèle de $\Gamma_1$ est trivialement un modèle de $\Gamma_2$ et réciproquement, tout modèle de $\Gamma_2$ force $p_B$ vrai et $p_C$ faux, ce qui valide $\varphi_3$, et est donc aussi un modèle de $\Gamma_1$.
+
+2. $mod(\Gamma_2)=\{(p_A, p_B, \neg p_C, p_D), (p_A, p_B, \neg p_C, \neg p_D), (\neg p_A, p_B, \neg p_C, p_D)\}$
+
+3. $\Gamma_2$ est consistant (il admet trois modèles).
+
+4. $\varphi_3$ est une conséquence logique de $\Gamma_2$.
+
+5. Il est contradictoire (aucun modèle de $\Gamma_2$ ne valide la nouvelle proposition, du coup ça marche pas).
+
+\exo
+$T$ : je joue au tennis, $R$ : je regarde du tennis à la télé, $A$ : je lis des articles sur le tennis. La publicité s'énonce $(\neg T\rightarrow R) \wedge (\neg R \rightarrow A) \equiv (T \vee R)\wedge(R\vee A) \equiv R\vee(T\wedge A)$ ; ainsi, la seule activité possible à l'exclusion des deux autres est $R$.
+
+\exo
+$A, B, C$ pour noter chaque suspect ; $D$ : Brown connaissait la victime ; $E$ : Clark détestait la victime ; $F$ : Brown était en ville ; $G$ : Adams était en ville. Les déclarations des suspects se formulent comme suit :\begin{itemize}
+  \item $\varphi_A = \neg A \wedge D \wedge E$
+  \item $\varphi_B = \neg B \wedge \neg D \wedge \neg F$
+  \item $\varphi_C = \neg C \wedge F \wedge G \wedge (A \vee B)$
+\end{itemize}
+Si Adams est le coupable, alors Brown et Clark disent la vérité d'après l'énoncé ; or, leurs déclarations sont contradictoires (l'un affirme $F$ et l'autre $\neg F$). Si Clark est le coupable, le même problème se pose entre les déclarations d'Adams et Brown. C'est donc Brown le coupable, ce saligaud.
+
+\exo
+1. En numérotant les position de 1 à 4 dans le sens horaire en partant du haut, on peut exprimer chaque contrainte sous la forme : $1A$ signifie "la carte à la position 1 est un As", ou $3\blacklozenge$ pour "la carte à la position 3 est un Carreau".
+
+2. Notre problème se modélise alors par un ensemble de clauses d'unicité : $(1A\wedge\neg 2A\wedge\neg 3A\wedge\neg 4A)\vee(\neg 1A\wedge 2A\wedge\neg 3A\wedge\neg 4A) \vee...$ (avec le même genre de clauses pour les couleurs), auxquelles on adjoint les contraintes de l'énoncé :\begin{itemize}
+\item $1A$,
+\item $3\spadesuit$,
+\item $2D$,
+\item $1R\rightarrow 1\clubsuit \wedge 2R\rightarrow 2\clubsuit \wedge ...$, 
+\item $1A\rightarrow \neg 1\blacklozenge \wedge 2A\rightarrow \neg 2\blacklozenge \wedge...$
+\end{itemize}
+\end{document}

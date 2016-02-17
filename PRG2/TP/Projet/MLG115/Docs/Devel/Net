@@ -1,0 +1,13 @@
+
+Client - instance of the program with no server, connected to a server.
+Packet - size of information + actual information
+
+If we are the server, and where are the players is not the game-writers concern.
+
+He knows:
+  - The local players (to manage split screen or sth)
+  - How many players are there at all.
+
+Every 'connect' creates a new player. All instances get cli_change_fun.
+
+When we became a client we receive all world serializers and start to receive frames.

@@ -1,0 +1,35 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\title{ARC2 -- TP 1}
+\author{Léo Noël-Baron \& Thierry Sampaio}
+\date{17/01/2016}
+
+\input{../../../tex/rap_header}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{UC cassée}
+
+Le fichier \verb?UC.bdf? décrit une UC non fonctionnelle ; en tentant de l'utiliser, on constate que le cycle 1 (commun à toutes les instructions, deuxième cycle de \textbf{fetch}) ne déclenche pas le signal ChIR. Le registre d'instructions ne charge alors jamais d'instruction réelle, ce qui explique le dysfonctionnement. Il suffit de relier ChIR sur le compteur de cycles, au cycle 1, et le problème est réglé.
+
+Cependant le processeur ne fonctionne toujours pas ; en effet, le signal R$\triangleright$Bus n'est pas branché non plus. Il faut le relier judicieusement aux cycles 2, 3 et 5 en fonction des diverses commandes qui l'utilisent (\verb?stw?, \verb?ldw?, ...), et le processeur exécute finalement le programme chargé sans erreur.
+
+\subsection*{UAL cassée}
+
+Le chargement du fichier \verb?UAL.bdf? provoque de nouvelles erreurs. En examinant le schéma du circuit, on constate que certaines commandes (\verb?add? et \verb?inc4?) ne sont tout simplement pas implémentées. L'ajout des circuits adéquats corrige toutes les erreurs d'exécution ; le NIOS est réparé.
+
+\subsection*{Une instruction de copie}
+
+Ajouter une nouvelle instruction implique de la placer dans le tableau des OP-codes existants ; dans notre cas, on peut choisir pour une instruction de copie registre à registre, le format R-type et prendre comme OPX n'importe quelle entrée vide du tableau. La syntaxe voulue est \verb?mov rB, rA? ; comme on ne peut pas sélectionner plusieurs registres à la fois, il faut faire transiter le contenu à copier dans le registre interne C du processeur. Ainsi, cette instruction se décompose en deux cycles :
+
+\begin{tabular}{c|c c}
+Cycle 2 & \verb?C <- rA? & selrA, ChC, R$\triangleright$Bus \\
+Cycle 3 & \verb?rB <- C? & selrB, ChR, C$\triangleright$Bus
+\end{tabular}
+
+Pour ajouter l'instruction au processeur, il suffirait de rajouter les branchements adéquats aux signaux mentionnés, et de relier l'OP-code choisi.
+
+\end{document}

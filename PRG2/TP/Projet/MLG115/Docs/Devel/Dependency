@@ -1,0 +1,21 @@
+           Module Dependency Graph:
+
+                      lexer   log       udp
+ serialize   tcp        ^\   /^ ^\      /^
+    ^\       /^           \ /    protocol
+      \     |   /-------> parser  
+       \    |  /          /^  ^\   vector
+        \   | /   keys   /      \   /^
+         socket     ^\  /        \ /
+           ^          input     video   sprite_col
+           |          /^        /^ ^\     /^
+           |         /         /     \   /
+           |   inputedit    font     sprite
+           |          ^\     ^\       /^
+           |           |   widget     |
+           |           |    /^        /
+           \            \  /         /
+            net      menu,console   /
+              ^\                   /
+                \-----\     /-----/
+                      helpers        

@@ -1,0 +1,108 @@
+\documentclass[a4paper]{article}
+
+\input{../../tex/les_header.tex}
+
+\lstset{language=Java}
+
+\title{Programmation}
+\author{Mickaël Foursov -- L3 Info Rennes 1}
+\date{2015 -- 2016, S1}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{TP1}
+
+Sujet : tri de boules Vertes, Blanches et Rouges (tableau de \verb?char? en Java).
+\begin{lstlisting}
+public class Lecture {
+    public static InputStream ouvrir(String path);
+    public static boolean finFichier(InputStream f);
+    public static void fermer(InputStream f);
+    public static char lireChar(InputStream f);
+    public static String lireString(InputStream f);
+    public static int lireInt(InputStream f) throws NumberFormatException;
+    public static int lireIntln(InputStream f) throws NumberFormatException;
+    public static double lireDouble(InputStream f) throws NumberFormatException;
+    public static double lireDoubleln(InputStream f) throws NumberFormatException;
+    public static String lireUnite(InputStream f, boolean lire);
+}
+public class Ecriture {
+    public static OutputStream ouvrir(String path);
+    public static void fermer(OutputStream f);
+    public static void ecrireChar(OutputStream f, char c);
+    public static void ecrireString(OutputStream f, String s);
+    public static void ecrireStringln(OutputStream f, String s);
+    public static void ecrireStringln(OutputStream f);
+    public static void ecrireInt(OutputStream f, int n);
+    public static void ecrireInt(OutputStream f, int n, int times);
+    public static void ecrireDouble(OutputStream f, double d);
+}
+\end{lstlisting}
+Toutes les méthodes sont surchargées par un équivalent pour l'entrée / sortie standard. L'algo de tri est donné, il faut juste corriger quelques erreurs pour respecter les invariants donnés aussi.
+
+\subsection*{TP2}
+
+Ce TP consiste à trouver un entier inférieur à 100 tel que son carré et son cube contiennent une seule fois chaque chiffre. Pas d'API fournie, faut juste faire un petit algo. Je crois qu'il y avait une autre partie mais elle était chiante, osef.
+
+\subsection*{TP3}
+
+Premier exo : suite des Fourmis (1, 11, 21, 1211, 111221, ...), un peu de parsing et de comptage. Deuxième exo : classement d'entiers entrés en ligne de commande, par insertion. Troisième exo : classement de paires d'entiers, un bon gros copier-coller.
+
+\subsection*{TP4}
+
+\begin{lstlisting}
+public class List<T extends SuperT> {
+  public List();
+  public ListIterator iterator();
+  public boolean isEmpty();
+  public void clear();
+  public void setFlag(T);
+  public void addHead(T);
+  public void addTail(T);
+  public List<T> clone();
+  public String toString();
+}
+public interface Iterator<T> {
+  public abstract void goForward();
+  public abstract void goBackward();
+  public abstract void restart();
+  public abstract boolean isOnFlag();
+  public abstract void remove();
+  public abstract T getValue();
+  public abstract T nextValue();
+  public abstract void addLeft(T);
+  public abstract void addRight(T);
+  public abstract void setValue(T);
+  public abstract String toString();
+}
+\end{lstlisting}
+
+\subsection*{TP6}
+
+\begin{lstlisting}
+public class BinaryTree<T> {
+  public BinaryTree();
+  public TreeIterator iterator();
+  public boolean isEmpty();
+  public int height();
+  public String toString();
+}
+public interface Iterator<T> {
+  public abstract void goLeft();
+  public abstract void goRight();
+  public abstract void goUp();
+  public abstract void goRoot();
+  public abstract boolean isEmpty();
+  public abstract NodeType nodeType();
+  public abstract void remove();
+  public abstract void clear();
+  public abstract T getValue();
+  public abstract void addValue(T);
+  public abstract void setValue(T);
+  public abstract void switchValue(int); // wtf is this I don't know
+}
+\end{lstlisting}
+
+\end{document}

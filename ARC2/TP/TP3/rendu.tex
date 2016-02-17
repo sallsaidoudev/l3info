@@ -1,0 +1,24 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\title{ARC2 -- TP 3}
+\author{Léo Noël-Baron \& Thierry Sampaio}
+\date{03/02/2016}
+
+\input{../../../tex/rap_header}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Inspection des registres et de la mémoire}
+
+La section mémoire commence par deux \verb?skip 4? puis la réservation d'un mot, donc la chaîne \verb?invite_a? commence à l'adresse 0x10000C. En plaçant un point d'arrêt sur l'instruction \verb?movia? qui met cette adresse dans r4, on vérifie ce calcul.
+
+La chaîne s'affiche à l'envers dans la mémoire ; en effet, elle y est stockée dans le bon sens mais l'affichage par défaut de la mémoire dans Altera Monitor tient compte de son organisation \textit{little-endian} et renverse les octets pour lire les mots (de 32 bits) dans l'ordre. En choisissant d'afficher la mémoire par octet, on peut donc lire la chaîne dans le bon ordre, telle qu'elle est stockée en mémoire.
+
+\subsection*{Calcul de PGCD}
+
+Les listings en assembleur des deux exercices suivants sont fournis en fichiers joints et commentés.
+
+\end{document}

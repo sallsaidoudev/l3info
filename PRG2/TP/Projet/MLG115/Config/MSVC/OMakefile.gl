@@ -1,0 +1,165 @@
+INCLUDES=+sdl-gl $(TOP)/MLG/.libs
+LIBS=bigarray sdl sdlloader unix $(TOP)/MLG/mlg
+
+# Names of the compilers
+OCAMLC   = ocamlc
+OCAMLOPT = ocamlopt
+OCAMLDEP = ocamldep
+OCAMLLEX = ocamllex
+OCAMLYACC= ocamlyacc
+#OCAMLLIB =
+CC = gcc
+CFLAGS+=-I/usr/include/SDL -I/lib -DUSE_GLSDL
+CLIBS=@CLIBS@
+### Global options are here:
+BYTECODE=no
+OCAML_FLAGS+=            # Additional options for both compilers (eg -unsafe)
+OCAMLC_FLAGS+=           # Options specific for ocamlc
+OCAMLOPT_FLAGS+=#-inline 100 # Options specific for ocamlopt (eg -inline)
+CAMLP4+=-pp "camlp4o"
+STATIC=
+LINK_FLAGS+=-verbose -cclib "-lSDL -lSDL_image "
+
+# Include .libs subdirectory, and add -I to include dirs
+INCLUDES +=.libs
+INCLUDES :=$(addprefix -I ,$(INCLUDES))
+
+# Add extensions specific for the compilation model
+ifeq ($(BYTECODE),YES)
+ LIBS_C:=$(addsuffix .cma,$(LIBS))
+ FILES_CO:=$(addsuffix .cmo,$(FILES))
+ PACKS_CO:=$(addsuffix .cmo,$(PACKS))
+ OCAML_COMP:=$(OCAMLC) $(CAMLP4) $(INCLUDES) $(OCAML_FLAGS) $(OCAMLC_FLAGS)
+ ifdef LIBRARY
+  LIBRARY_C:=$(addsuffix .cma,$(LIBRARY))
+ endif
+else
+ LIBS_C:=$(addsuffix .cmxa,$(LIBS))
+ FILES_CO:=$(addsuffix .cmx,$(FILES))
+ PACKS_CO:=$(addsuffix .cmx,$(PACKS))
+ OCAML_COMP:=$(OCAMLOPT) $(CAMLP4) $(INCLUDES) $(OCAML_FLAGS) $(OCAMLOPT_FLAGS)
+ ifdef LIBRARY
+  LIBRARY_C:=$(addsuffix .cmxa,$(LIBRARY))
+ endif
+endif
+
+FILES_MLI :=$(wildcard *.mli)
+FILES_CI :=$(subst .mli,.cmi,$(FILES_MLI))
+FILES_O:=$(addsuffix .o,$(FILES))
+
+FILES_OUT_CI :=$(addprefix .libs/,$(FILES_CI))
+FILES_OUT_CO :=$(addprefix .libs/,$(FILES_CO))
+FILES_OUT_O  :=$(addprefix .libs/,$(FILES_O))
+
+# Finally define target all
+
+ifdef FILES
+all: $(FILES_OUT_CI) $(FILES_OUT_CO) $(EXECUTABLE) $(LIBRARY_C)
+else
+all:
+endif
+ifdef DYNLIB
+	$(CC) -shared -rdynamic -o $(DYNLIB) .libs/*.o
+endif
+ifdef SUBDIRS
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i all; done
+endif
+
+.PHONY: doc
+
+ifdef EXECUTABLE
+$(EXECUTABLE): .libs/depend $(FILES_OUT_CO) $(EXTERNAL) $(PACKS_CO)
+	$(OCAML_COMP) $(LIBS_C) -o $@ $(PACKS_CO) $(FILES_OUT_CO) $(EXTERNAL) $(LINK_FLAGS)
+endif
+ifdef LIBRARY
+$(LIBRARY_C): .libs/depend $(FILES_OUT_CO) $(EXTERNAL) $(PACKS_CO)
+ ifeq ($(BYTECODE),YES)
+  ifdef EXTERNAL
+	$(OCAML_COMP) -custom -a -o $@ $(PACKS_CO) $(FILES_OUT_CO) -cclib -lstub$(LIBRARY)
+	ar cr libstub$(LIBRARY).a $(EXTERNAL)
+	ranlib libstub$(LIBRARY).a
+  else
+	$(OCAML_COMP) -custom -a -o $@ $(PACKS_CO) $(FILES_OUT_CO) 
+  endif
+ else
+	$(OCAML_COMP) -a -o $@ $(PACKS_CO) $(FILES_OUT_CO)
+	ar cr $(LIBRARY).a $(FILES_OUT_O) $(EXTERNAL)
+	ranlib $(LIBRARY).a
+	lib /out:$(LIBRARY).lib $(FILES_OUT_O) $(EXTERNAL)
+ endif
+endif
+
+# We want all .mli and all real .ml but not the ones generated from .mll .mly
+DOC_FILES:=$(FILES_MLI) $(filter $(wildcard *.ml),$(addsuffix .ml,$(FILES)))
+
+ifdef FILES
+doc: all $(DOC_FILES)
+ifdef SUBDIRS
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i doc; done
+endif
+	@mkdir -p doc
+	ocamldoc $(CAMLP4) -html -d doc $(INCLUDES) $(DOC_FILES)
+else
+doc:
+ifdef SUBDIRS
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i doc; done
+endif
+endif
+
+
+clean:
+	rm -rf out doc .libs $(EXECUTABLE) $(LIBRARY) $(DYNLIB) *~ *.o *.cmx *.cmo *.cmi *.a *.cmxa *.cma *.lib gmon.out
+ifdef SUBDIRS
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i clean; done
+endif
+
+distclean:
+ifdef SUBDIRS
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i distclean; done
+endif
+	rm -rf out doc .libs $(EXECUTABLE) $(LIBRARY) $(DYNLIB) *~ *.o *.cmx *.cmo *.cmi *.a *.cmxa *.cma *.lib gmon.out $(DISTDELETE)
+
+# Generate ".libs/" prefixes in the depend file
+.libs/depend: Makefile
+	@mkdir -p .libs
+ifeq ($(BYTECODE),YES)
+	@$(OCAMLDEP) $(CAMLP4) *.ml *.mli | sed -e "s/^\([^ ]\)/.libs\/\\1/;s/[ ^]*$$//;s/\([^ ]\) /\\1 .libs\//g;s/.libs[/][\\]/\\\\/g;s/^    /    .libs\//" > .libs/depend
+else
+	@$(OCAMLDEP) -native $(CAMLP4) *.ml *.mli | sed -e "s/^\([^ ]\)/.libs\/\\1/;s/[ ^]*$$//;s/\([^ ]\) /\\1 .libs\//g;s/.libs[/][\\]/\\\\/g;s/^    /    .libs\//" > .libs/depend
+endif
+#"s/^/.libs\//;s/[ ^]*$$//;s/ / .libs\//g"
+
+
+#Implicit rules
+.SUFFIXES: .mll .mly .ml .mli .cmo .cmi .cmx
+
+.libs/%.cmi: %.mli
+	$(OCAML_COMP) -c $<
+	@mv -f $(subst .mli,.cmi,$<) $@
+
+.libs/%.cmo: %.ml $(PACKS_CMO)
+	$(OCAML_COMP) -c $<
+	@mv -f $(subst .ml,.cm*,$<) .libs
+
+.libs/%.cmx: %.ml $(PACKS_CMX)
+	$(OCAML_COMP) -c $<
+	cp $(subst .ml,.obj,$<) $(subst .ml,.o,$<)
+	mv -f $(subst .ml,.cm*,$<) $(subst .ml,.o*,$<) .libs
+
+.libs/%.o: %.c
+	$(OCAML_COMP) -c $< -o $@ -ccopt "$(CFLAGS)"
+	cp $(subst .c,.obj,$<) $(subst .c,.o,$<)
+	mv -f $(subst .c,.o*,$<) .libs
+
+%.ml: %.mll
+	$(OCAMLLEX) $<
+
+%.ml: %.mly
+	$(OCAMLYACC) $<
+	$(OCAML_COMP) -c $(subst .mly,.mli,$<)
+	@mv -f $(subst .mly,.cmi,$<) .libs
+	@rm -f $(subst .mly,.mli,$<)
+
+ifdef FILES
+-include .libs/depend
+endif

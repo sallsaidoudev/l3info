@@ -1,0 +1,168 @@
+\documentclass[a4paper]{article}
+
+\input{../../tex/les_header.tex}
+
+\lstset{language=C}
+
+\title{Système}
+\author{Aomar Maddi -- L3 Info Rennes 1}
+\date{2015 -- 2016, S1}
+
+\begin{document}
+
+\maketitle
+
+\section{Shell UNIX}
+
+\subsection{Commandes}
+
+\begin{itemize}
+	\item \verb?cd <dir>? se déplacer
+	\item \verb?ls <nom>? afficher
+	\item \verb?more <nom>?
+	\item \verb?less <nom>? idem avec scrolling
+	\item \verb?ln (-s) <nom1> <nom2>? créer un lien (symbolique)
+	\item \verb?mkdir <nom>? créer un répertoire
+	\item \verb?rm -rf <nom>? supprimer
+	\item \verb?cp -r <nom1> <nom2>? copier nom1 vers nom2
+	\item \verb?cat <nom1> ... <nomn>? concaténer et afficher les fichiers
+	\item \verb?echo <message>?
+	\item \verb?chmod (ugo )(+-=)(rwx) <nom>? changer les droits d'un fichier
+	\item \verb?basename <nom>? nom sans chemin
+	\item \verb?dirname <nom>? chemin sans le nom
+	\item \verb?pwd? afficher le répertoire courant
+	\item \verb?exit? quitter le programme
+	\item \verb?read <var1> ... <varn>? lire des variables (0 si OK) 
+	\item Redirections : \verb?>? sortie standard, \verb?>>? concatène, \verb?>? entrée standard, \verb?|? redirection ES-SS
+	\item Délimiteurs : \verb?'? pas d'interprétation, \verb?"? idem sauf \verb?$? et \verb?`?, \verb?`? interprète le contenu
+	\item Caractères spéciaux : \verb?*? joker, \verb|?| un caractère, \verb?\? échappement
+\end{itemize}
+
+\subsection{grep et find}
+
+\verb?grep (-r) <regex> <nom>? sort toutes les lignes de \verb?nom? (fichier ou répertoire) contenant l'expression régulière donnée (où \verb?.? joker, \verb?*? étoile de Kleene, \verb?[x-y]? classe de caractères).
+
+\verb?find <dir> (-name <nom> -usr <user> -size <n(okM)> -type (dfl) ...)? affiche les fichers contenus dans le répertoire spécifié en filtrant selon les critères donnés ;\\ \verb?-not -a -o \( \)? permettent de combiner les filtres, \verb?-exec cmd {} \;? exécute la commande donnée sur chaque fichier trouvé.
+
+\subsection{Programmation}
+
+\begin{itemize}
+	\item \verb?chmod +x script? (le script commence par \verb?#!/bin/sh?) puis \verb?./script arg1 ... argn?
+	\item Identificateurs : \verb?$#? nombre de paramètres, \verb?$*? ou \verb?$@? tous, \verb?$0..n? nom du programme puis paramètres, \verb?$HOME?, \verb?$PATH?, ...
+	\item Commentaires : \verb?# commentaire?
+	\item Variables : \verb?var=(valeur,var2,`commande`)?, peuvent être initialisées par \verb?read?
+	\item Tests : \verb?! -a -o? logique, \verb?-d -f <nom>? existence, \verb?-s <nom>? non vide, \verb?-r -w -x <nom>? droits, \verb?-z -n <chaine>? longueur nulle/non nulle, \verb?<ch1> (!)= <ch2>?,\\ \verb;<n1> -eq -neq -gt -lt -ge -le <n2>; arithmétique
+	\item Conditions : \begin{verbatim}
+if [ commandes ] # si dernière commande renvoie 0
+then             # alors
+    commandes
+else             # sinon
+    commandes
+fi
+	\end{verbatim}
+	\item Itérations : \begin{verbatim}
+while [ commandes ] # tant que der = 0
+do
+    commandes
+done
+for var
+in <liste> # explicite $foo $bar $so ou liste telle que $*
+do
+    commandes
+done
+	\end{verbatim}
+\end{itemize}
+
+
+\section{Programmation C}
+
+\subsection{Mémo syntaxique}
+
+\begin{lstlisting}
+/* Préprocesseur */
+#include <stdio.h> // chargement d'une lib c
+#include "libperso.h"
+#define CONSTANTE "valeur" // constante de préprocesseur
+
+/* Variables et pointeurs */
+int i, j = 0; // types : (unsigned ou signed) char short int long float double
+char machin = (char) truc; // cast de types
+int* pi = &i; // pi est un pointeur d'int sur i
+// le type pointeur neutre est void*, le pointeur nul est NULL
+*pi += 1; // déréférencement
+
+/* Tableaux */
+float stats[64]; // taille statique
+int p[] = {2, 3, 5, 7, 11, 13}; // initialisation
+p == &p[0]; // tableaux et pointeurs c'est pareil
+p[i] == *(p+i); // et oui
+// mais on ne peut pas copier ou affecter n'importe comment (strcpy...)
+
+/* Fonctions */
+type fonction(type par1, type par2, ...) {
+    instructions;
+    return resultat; // de type correct, rien si void
+}
+// localité de bon sens
+// paramètres passés par valeur (pour référence on utilise les pointeurs)
+char* exemple(int n, char* str); // prototype
+// permet d'utiliser une fonction non déclarée
+// à rassembler dans un fichier .h
+
+/* Point d'entrée */
+int main(int argc, char* argv[]) { // nb d'arguments commande, leur liste
+    ...
+    return 0; // valeur de retour si pas d'erreurs
+}
+
+/* Chaînes et E/S */
+#include <string.h> // une chaîne est un char[] finissant par \0
+int strln(char* s); // |s|
+char* strcpy(char *s1, char *s2); // s1 <- s2
+int strcmp(char *s1, char *s2); // 0 si s1 == s2
+#include <stdio.h> // fonctions d'entrée / sortie
+int getchar(); // lit le prochain caractère sur stdin
+void putchar(char c); // écrit un caractère sur stdout
+int printf(char* format, e1, ..., en); // écrit selon le formatage
+int scanf(char* format, a1, ..., an); // lit les variables selon le formatage
+// format : %d %c %s %lf ...
+
+/* Types énumérés et structurés */
+enum couleur {coeur, pique, carreau, trefle};
+enum couleur macouleur = pique;
+struct carte {couleur c, int val}; // référence récursive possible
+struct carte macarte = {pique, 9};
+typedef struct {couleur c, int val} carte; // type alias (marche aussi avec enum)
+macarte.val = 1;
+pcarte->c = trefle; // pour un pointeur vers une structure
+size_t sizeof(type t); // donne la taille en octets d'un type
+
+/* Gestion de la mémoire */
+void* malloc(size_t s); // retourne un pointeur neutre (cast) vers un espace mémoire
+void free(void* p); // libère la mémoire
+
+/* Gestion de fichiers */
+#include <stdio.h>
+FILE* fopen(char* name, char* mode); // mode r, w, a (append)
+int fclose(FILE* f); // 0 si fermé, EOF sinon
+int putc(int c, FILE* file); // EOF en cas d'erreur
+int getc(FILE* file);
+// écrit (lit) nb blocs de taille size de buf vers file
+int fwrite(void* buf, int size, int nb, FILE* file);
+int fread(void* buf, int size, int nb, FILE* file);
+// idem printf et scanf
+int fprintf(FILE* file, char* format, e1, ..., en);
+int fscanf(FILE* file, char* format, a1, ..., an);
+\end{lstlisting}
+
+\subsection{Makefile}
+
+Si un fichier a été modifié plus récemment que la cible, les commandes s'exécutent :
+\begin{verbatim}
+target: file1 file2 ...
+    commands
+\end{verbatim}
+
+On rajoute des cibles génériques (\verb?clean?, \verb?all?...) par confort d'utilisation ; on peut aussi définir des variables Shell et tout ce qu'il faut pour avoir un Makefile universel.
+
+\end{document}

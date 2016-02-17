@@ -145,4 +145,94 @@ Soit $L$ un langage reconnaissable ; $\exists N$ tel que, $\forall w\in L, |w|\g
 Le langage $\{a^nb^n|n\geqslant 0\}$ n'est pas reconnaissable.
 \end{prop}
 
+\subsection{Théorème de Kleene}
+\begin{defi}
+Rat$(\Sigma^*)$ est la plus petite famille de langages contenant les parties finies de $\Sigma^*$, close par union, intersection et étoile.
+\end{defi}
+
+\begin{prop}
+Tout langage rationnel ($\in$Rat$(\Sigma^*)$) possède une expression sous la forme d'un nombre fini d'unions, de produits et d'étoiles de langages finis. (On définit par suite les expressions rationnelles.)
+\end{prop}
+
+\begin{prop}
+Théorème de Kleene --- Rat$(\Sigma^*) = \textnormal{Rec}(\Sigma^*)$
+\end{prop}
+\rem{Le sens réciproque s'obtient par exemple, par résolution de systèmes avec le lemme d'Arden ($X=AX\cup B \Rightarrow X=A^*B$).}
+
+\subsection{Résiduels}
+
+Diapo 6, pp. 11-24.
+
+\begin{prop}
+L'automate des résiduels de $L$ est minimal pour $L$.
+\end{prop}
+
+\subsection{Nérode}
+
+\begin{defi}
+Un mot de $\Sigma^*$ sépare deux états $q$ et $q'$ d'un automate s'il mène à un état final par un, et non final par l'autre. Deux états sont Nérode-équivalents si aucun mot ne les sépare.
+\end{defi}
+
+\begin{defi}
+L'automate quotient est l'automate des classes de Nérode (en particulier, $\bar{\delta} = \{(\bar{q},x,\bar{q'})|\exists q\in\bar{q}, q'\in\bar{q'} \textnormal{ tels que } (q,x,q')\in\delta\}$). Il est équivalent à l'automate initial et minimal (puisque $\#Res(L)=\#\{L_q|q\in Q\}=\#\{\bar{q}|q\in Q\}$).
+\end{defi}
+
+On le construit par induction pour trouver l'équivalence de Nérode : $\sim_0$ sépare les états finals et non-finals, $\sim_i$ se déduit de $\sim_{i-1}$ en séparant ses classes selon les lettres de $\Sigma$.
+
+
+\section{Automates à pile}
+
+\begin{defi}
+Un automate à pile simple est un quadruplet $(\Sigma, \Gamma, \gamma\in\Gamma, \lambda :\Sigma\times\Gamma\rightarrow\mathcal{P}(\Gamma^*))$. $\gamma$ est le symbole de fond de pile.
+\end{defi}
+
+\begin{defi}
+Un mot est dit reconnu par un automate à pile simple, si la pile est vide après lecture de ce mot.
+\end{defi}
+
+\begin{defi}
+Une grammaire algébrique est sous forme normale de Greibach si $P\subset V\times XV^*$.
+\end{defi}
+
+\begin{prop}
+Tout langage algébrique propre (ne contenant pas le mot vide) possède une grammaire sous forme normale de Greibach.
+\end{prop}
+
+\begin{prop}
+Un langage propre est algébrique si, et seulement si il existe un automate à pile simple qui le reconnaît.
+\end{prop}
+\rem{On construit l'automate directement à partir de la grammaire, et réciproquement.}
+
+\subsection{Automates à pile généraux}
+
+\begin{defi}
+Même chose avec un ensemble fini d'états, dont un initial et éventuellement des finals.
+\end{defi}
+
+\begin{defi}
+Ces automates peuvent reconnaître un langage par pile vide ou par état final (i.e. un calcul valide mène à...).
+\end{defi}
+
+\begin{prop}
+Un langage est algébrique si, et seulement si il existe un automate à pile qui le reconnaît par pile vide (ou par état final, c'est équivalent).
+\end{prop}
+\rem{Les automates à pile simple ne sont qu'un cas particulier (un seul état et pas d'$\epsilon$-transition).}
+
+\begin{defi}
+Un automate à pile est déterministe si tout calcul est entièrement déterminé par l'état, le sommet de pile et la lettre lue.
+\end{defi}
+\rem{Un langage est déterministe quand un automate déterministe le reconnaît par état final.}
+
+\begin{prop}
+Inclusions : Rec$(\Sigma^*)\subset$Det$(\Sigma^*)\subset$Non ambigus$\subset$Alg$(\Sigma^*)$.
+\end{prop}
+
+\begin{prop}
+L'ensemble des langages algébriques est clos par intersection rationnelle.
+\end{prop}
+
+\begin{prop}
+Théorème de Bar-Hillel, Perles et Shamir : le lemme de l'étoile en mieux. Pour $L$ algébrique, il existe $N$ tel que tout mot $f\in L, |f|>N$ se décompose en $\alpha u\beta v\gamma$ avec $uv\neq \epsilon$, $|u\beta v|\leqslant N$ et $\forall n, \alpha u^n\beta v^n\gamma\in L$.
+\end{prop}
+
 \end{document}

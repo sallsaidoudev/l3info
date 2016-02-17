@@ -1,0 +1,101 @@
+# id r1 r2 size count slow color color_fun damage
+ring_explosion esm 0 10 5 300 0.6 white to_red 5
+ring_explosion emm 0 20 6 1200 0.6 white to_red 5
+ring_explosion elm 0 30 7 2000 0.6 white to_red 5
+
+ring_explosion puff 0 4 3 100 0.6 white fade 0
+ring_explosion puff2 0 1 1 100 0.6 white to_red 0
+
+ring_explosion emicro 0 5 3 100 0.6 white to_red 2
+
+ring_explosion elr 0 30 7 500 0.6 white fade 0
+# 
+missle
+  trigger {t_hit} {a_explode esm} 
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle msm
+
+missle
+  trigger {t_hit} {a_explode emicro} 
+#  trigger {t_time_once 0} {a_speed 0.1}
+end_missle shard
+
+missle
+  trigger {t_time_once 5} {a_fan_split msm 1 1 0}
+end_missle stg3
+
+missle
+  trigger {t_time_once 5} {a_fan_split stg3 3 3.14 0}
+end_missle stg2
+
+missle
+  trigger {t_hit} {a_explode elr}
+#  trigger {t_hit} {a_fan_split stg2 1 0 0} 
+#  trigger {t_hit} {a_abs_fan_split shard 9 1 0 0.9} 
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+#  trigger {t_time_once 50} {a_fan_split msm 3 0.8 0} 
+end_missle msm2
+
+missle
+  trigger {t_hit} {a_explode emm}
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle mmm
+
+missle
+  trigger {t_hit} {a_explode elm} 
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle mlm
+
+missle
+  trigger {t_hit} {a_explode esm}
+  trigger {t_time_once 50} {a_fan_split zag 1 0 -1.62}
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle zig
+
+missle
+  trigger {t_hit} {a_explode esm}
+  trigger {t_time_once 50} {a_fan_split zig 1 0 1.62}
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle zag
+
+missle
+  trigger {t_hit} {a_explode esm}
+  trigger {t_time_once 75} {a_fan_split msm 3 0.3 0}
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle tri
+
+missle
+  trigger {t_hit} {a_explode esm}
+  trigger {t_time_once 75} {a_explode emm}
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle light_aa
+
+missle
+  trigger {t_hit} {a_explode esm}
+  trigger {t_time_once 20} {a_explode emm}
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle aa_pellet
+
+missle
+  trigger {t_hit} {a_explode esm}
+  trigger {t_time_once 75} {a_abs_fan_split aa_pellet 5 6.28 0 3}
+  trigger {t_time_every 2} {a_explode_nondel puff2} 
+end_missle heavy_aa
+
+# wpid name mtype price
+add_weapon ex "Experimental" msm2 0
+
+add_weapon sm "Small Missle" msm 0
+add_weapon mm "Medium Missle" mmm 100
+add_weapon lm "Large Missle" mlm 300
+
+add_weapon zig "Zig" zig 100
+add_weapon zag "Zag" zag 100
+
+add_weapon tri "Trident" tri 200
+
+add_weapon laa "Light AA" light_aa 200
+add_weapon laa "Heavy AA" heavy_aa 400
+
+#add_weapon hc "Holy Cross" mhc 100
+#add_weapon kb "Kosher Bomb" mkb 100

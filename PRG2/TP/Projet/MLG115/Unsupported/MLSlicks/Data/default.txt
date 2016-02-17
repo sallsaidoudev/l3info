@@ -1,0 +1,8 @@
+set debug_parser   true
+set debug_input    true
+set debug_video    true
+set debug_net      true
+set debug_helpers  true
+#set console_font "Data/font.png"
+bind_global f10    {quit}
+bind_global f12    {toggle fullscreen}

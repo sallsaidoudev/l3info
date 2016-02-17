@@ -1,0 +1,12 @@
+Syntax of the builtin parser:
+
+<cmd> ::= <simple_cmd>
+        | <id> <exp> <exp> ... <exp>
+        | <cmd>; <cmd>
+
+<simple_cmd> ::= <id>
+               | {<cmd>}
+
+<exp> ::= <string>
+        | $<id>
+        | "<special_string>"        # With white spaces or $ or ^ or ...

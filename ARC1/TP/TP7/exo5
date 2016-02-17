@@ -1,0 +1,23 @@
+jusque !Init faire
+	RMAX := 0, CPT := 0
+jusque Dem faire
+	RX := E
+jusque !Dem faire
+	si RXSUP
+		RMAX := RX, CPT:= 0
+	si RXEQ
+		CPT := CPT+1
+	fait
+
+
+RMAX := 0, CPT := 0              Init         13
+RX := E, pret                    !Dem         14
+RX := E                          inf          19
+RX := E                          eq           18
+RMAX := RX, CPT := 0
+CPT := CPT+1
+RX := E                          Dem          19
+RX := E, pret                    !Dem         14
+
+\Init Dem 
+0 0

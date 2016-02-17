@@ -1,0 +1,346 @@
+2005-05-14 [0.115] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: Many things changed in last 4 releases
+	* General: Ocaml 3.08 now supported
+	* Windows: Tested with cygwin and docs updated
+2003-10-25 [0.111] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Legal: final legal fixes for SourceForge submission
+	* Documentation: cleaning
+	* Unsupported: all unsupported games ported to new Video
+	* Makefile: configure tested on MingW, works :)
+2003-10-03 [0.108] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* eLeL: Some Documentation fixes
+	* Examples: work with new Video
+	* General: updated for 3.07
+2003-10-02 [0.107] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Scorch fixed
+2003-10-02 [0.106] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* TWidget, TMenu: Trial migration from Scorch
+2003-10-01 [0.105] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Video (primitives) now different versions for onscreen and
+	  offscreen drawing
+2003-09-28 [0.102] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Tcp, Sprite_col (TCP_NODELAY, IP_TOS)
+	* Configure (--enable-gl-sdl) includes +sdl-gl and sets CFLAGS
+	* Input (stdin) checks if we are non windozed
+2003-09-27 [0.101] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Video, Sprite, Console, Font: updated for new video
+	* Video: on the fly driver switching
+2003-09-26 [0.100] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Video: rewritten
+	* Font: ttf finally out
+2003-09-25 [0.99] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Video, Sprite_col, Console: Fixes for glSDL
+	* Video (screenshot)
+	* Log (dump)
+2003-09-19 [0.98] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Video: optimized for hardware acceleration
+	* Configure: added, libtoolized.
+	* Docs/Install: updated
+	* Support/OMakefile.MSVC: created
+2003-09-15 [0.97] Cezary Kaliszyk, Domin  <cek@zodiac.mimuw.edu.pl>
+	* Input: Stdin whole lines are passed to parser
+	* Parser: no error if semicolon left at end of line
+	* Video: cross-enviroment fixes
+	* Domin, Parser (megatuples)
+	* Domin, Helpers: fps variable
+2003-08-07 [0.96] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Menu: little fixes
+	* Input (action): starting and stoping actions from console
+	* Parser (alias): back from missing in action
+	* Scorch update
+	* Parser (help) at last
+	* Console: Coloring of text instead of background
+	* Font: sfont optional coloring
+	* Lieros: nearly integrated
+	* Video (line): speedup
+	* Video (color_surface)
+	* Video (duplicate_surface) fixed
+	* Sprite.Table
+	* Sprite (iter_data, fold_data)
+2003-07-01 [0.95] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net (add_var): updated
+	* Video (line): bugfixes
+	* Sprite (move_in_bounds): optional check param
+	* Net (local_players): key set semantics changed
+	* Liero_ck update
+	* OMakefile: Solaris SDL include path added
+	* Serialize (float)
+	* Parser (quadruple, pentuple)
+	* General: surface vs context cleanup
+2003-05-30 [0.94] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Helpers (main_no_quit)
+	* Arcanoid
+	* Liero_ck
+	* Expl clouds test
+2003-05-20 [0.93] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Menu: started migration from scorch
+	* Input_edit (handle_repeat): extracted and added to mli.
+2003-05-17 [0.92] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Console: changed to match parser
+	* Parser: rewritten
+2003-05-13 [0.91] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Input_edit (repeat_speed): corrected
+	* Draw: removed
+	* Draw (ellipse): now in Video
+	* Video (line) fixed
+	* Video (pixel)
+	* Video: comments
+2003-05-12 [0.90] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Cezary Kaliszyk, eLeL, Video: rewritten
+	* Parser (available_completion): fixed
+	* Variable: written
+2003-05-11 [0.89] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Input (bind_mode)
+	* Shooter (enemy): synchronization of Random
+	* Helpers: synchronization of key state
+	* Helpers (add_action, add_actions): return press if released
+	  in the same tick
+	* Net (add_synchronizer)
+2003-05-10 [0.88] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite (add_collision_fun): fix in arguments order
+	* Sprite (collision): fix in the checking range
+2003-05-08 [0.87] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net, Input typo in privileged
+	* Net: rewriten
+	* General: comments in Video, Helpers, Net, Sprite updated
+	* Sprite (collision): checking per_pixel is now an option
+2003-05-07 [0.86] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite (rect_collision): correct frame
+	* Sprite (mask_cut)
+	* Scorch update
+	* Docs/Install updated
+	* Games moved to subdirectory Games
+2003-05-06 [0.85] Cezary Kaliszyk, eLeL <cek@zodiac.mimuw.edu.pl>
+	* Helpers: cleanup
+	* Video: comments
+	* Video (get_resolution): moved from helpers
+	* Makefile.static
+2003-05-05 [0.84] Cezary Kaliszyk, Domin <cek@zodiac.mimuw.edu.pl>
+	* Docs: directory restructuring
+	* Docs/Install: fixes
+	* Helpers (get_resolution)
+	* Domin, Helpers (video_mode variable): add 1152x864
+	* Scorch: update
+2003-05-04 [0.83] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: comment updates
+	* Draw: new module with graphical primitives
+	* Install: translated to english
+2003-05-04 [0.82] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Input (Error) removed
+	* Docs/Install: installation instructions
+	* Sprite (rect_collision): fix for sprites with more frames
+2003-05-03 [0.81] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: submodule Set created
+	* General: Many comments updated, make doc now works ok
+2003-05-03 [0.80] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Helpers (add_sprite_set_info): serialization of a sprite set
+	* Parser (available_completions): completion of missing word part
+	* Parser (available_completions): completion of variables after $, set
+	* Parser (execute): comments in script lines starting from #
+	* Console (real_draw): line wrapping
+	* Font (divide_string)
+2003-05-03 [0.79] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: Many logs created.
+	* Parser (bool_var, create_log)
+	* Console (real_draw): colors for information type and frame
+	* Console (event_handle): faster scroll speed
+2003-05-02 [0.78] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Log (get): information types
+	* Console (draw, real_draw): pg_up, line, adjusting to font size
+	* Parser (alias)
+	* Sprite_col: alpha corrected
+	* Scorch: update
+2003-05-02 [0.77] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: MLGame is now over 100kb :)
+	* Sprite (move_in_bounds)
+	* Sprite_col: module with collision in C, works with alpha. 
+	  Correct pink mapping.
+2003-05-01 [0.76] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: Rewritten, cg merged with sets and done on hashtables
+2003-04-30 [0.75] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: per pixel collision
+2003-04-30 [0.74] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: (set_frames)
+	* Scorch: update
+2003-04-30 [0.73] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Go: new game of continious Go.
+2003-04-30 [0.72] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net, Helpers, Sprite_set: many new comments
+	* Sprite_set: renamed from Spr_gr
+2003-04-29 [0.71] Cezary Kaliszyk, eLeL <cek@zodiac.mimuw.edu.pl>
+	* General: Comments and better names
+	* Serialize (int): works also with negative integers
+2003-04-28 [0.70] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Buffer (destroy)
+	* Net (disconnect): now works, added to console
+2003-04-27 [0.69] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Tcp: setsockopt nodelay
+	* Helpers (mainloop): fast frame getting (without drawing)
+	* Sprite (check_collisions, delete): no longer raise Outside
+2003-04-23 [0.68] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Spr_gr: new module with sprite groups
+2003-04-17 [0.67] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: many comments
+	* Net: acceleration
+	* Sprite: bugfix
+2003-04-16 [0.66] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net (privileged): small fixes
+	* Net (cli_msgs): small frame format change.
+	  (players with smaller numbers were privileged...)
+	* General: many comments
+2003-04-15 [0.65] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Snake, NetDummy: transfer world state
+	* Net (add_info): world state information
+2003-04-13 [0.64] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net: bugfix
+2003-04-12 [0.63] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net: transmision of player information to new client
+	* Serialize (list): bugfix (was reversed).
+2003-04-11 [0.62] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net server variables, privileges
+2003-04-08 [0.61] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net, Helpers tacting on server
+2003-04-08 [0.60] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: much cleanup
+2003-04-01 [0.59] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: half of ref's removed
+	* Net: cleanup
+2003-03-30 [0.58] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* eLeL, Serialize (small_int)
+	* Net: much cleanup
+	* Sprite: fixed
+2003-03-28 [0.57] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Snake: net implemented. World info not yet synchronized
+	* Net: fixed with more players on one client or server
+	* Buffer: undebugged
+	* Net: frames sent only when new events happen
+2003-03-27 [0.56] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net - order of messages in frame fixed
+	      - fixes with local clients
+	      - new fun returns local players
+	* Tcp, Buffer: undebugging
+	* Chat: Now without active waiting, 1% processor usage
+2003-03-27 [0.55] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net: fully working
+	* Chat: new example
+2003-03-27 [0.54] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Socket: new module with sockets which keep message lengths
+	* Net: coming up.
+2003-03-26 [0.53] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net
+2003-03-26 [0.52] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Tcp: commented
+2003-03-25 [0.51] eLeL & Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Dummy: example easiest possible game
+	* Data: directory with files shared by all games. Game files moved
+	  to Data subdirectories.
+2003-03-24 [0.50] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Console: Empty commands are not put in history, and show no error msg
+2003-03-21 [0.49] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Tcp: interface changed
+	* Serializer: partially written
+	* Tests/Tcp
+2003-03-16 [0.48] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Parser: variables with converters
+	* Input: actions in hashtable instead of list
+2003-03-05 [0.47] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Input_edit: Time based callbacks instead of frame ones
+	* Input (repeat_handler): returns events
+2003-03-04 [0.46] Cezary Kaliszyk & eLeL <cek@zodiac.mimuw.edu.pl>
+	* Main: rewritten. Now with forces.
+	* Sprite (outside)
+2003-03-03 [0.45] Cezary Kaliszyk & eLeL <cek@zodiac.mimuw.edu.pl>
+	* Console sprite variable size
+2003-03-02 [0.44] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Game: works again
+	* Input: no more active waiting
+2003-02-27 [0.43] eLeL <cek@zodiac.mimuw.edu.pl>
+	* Game rewritten, no longer works :(
+2003-02-26 [0.42] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: name cleanup
+	* Scorch: from now on in all releases
+	* Font: to versions, with sdlttf and without
+	* Docs/Net: network protocol description
+2003-02-25 [0.41] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* General: comments in mli
+2003-02-25 [0.40] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: collision fixed (self collision eliminated)
+	* Game: Animation frame changes when collision occurs.
+	  Queue changed to list.
+2003-02-24 [0.39] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Game: Splitscreen
+	* Video: contexts fixed
+2003-02-24 [0.38] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Video (create_surface) recreated
+2003-02-24 [0.37] eLeL <cek@zodiac.mimuw.edu.pl>
+	* Sprite: rewritten
+	* Video: now with contexts
+2003-02-20 [0.35] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: bugfix: Array.length - 1
+2003-02-19 [0.34] Domin & Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Parser: variables are read/write per default
+	* Parser (var_range)
+2003-02-19  [0.33] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Input bind_global concatenates with quotes
+	* Lexer faster special's lexing
+	* Video (video_mode): parser variable
+2003-02-19  [0.32] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Parser checks values, variable callbacks
+2003-02-18  [0.31] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Tcp: new TCP/IP module
+	* Sprite: set_pixel_size uncommented
+2003-02-18 [0.30] CeL <cek@zodiac.mimuw.edu.pl>
+	* Sprite: collision groups made symmetric
+2003-01-25 [0.29] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Game: draw all the time, writes fps at end
+	* ChangeLog Now using Emacs mode (C-x 4 a).
+	* Docs: Cleanup in Bugs, Todo, Graph
+	* Input_edit: repeat factors became parser variables
+2003-01-22 [0.28] eLeL & Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Parser: Total revision
+	* Lexer: Update for the parser
+	* Docs/Syntax: New file describing parser syntax
+2003-01-19 [0.27] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Lexer: New ocamllex file
+	* Parser: Now uses lexer. Variables, comments, quotes.
+	* Game: Frame length is now a parser variable.
+2003-01-17 [0.26] eLeL <cek@zodiac.mimuw.edu.pl>	
+	* Sprite: per rect collision
+	* Game: variable frame length
+2003-01-10 [0.25] eLeL <cek@zodiac.mimuw.edu.pl>	
+	* Sprite: Full collision with buckets
+	* Game: Collision update
+2003-01-10 [0.24] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>	
+	* Makefile: Fixed for our faculty lab configuration
+2003-01-09 [0.23] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>	
+	* Protocol, Net: Some fixes
+	* Makefile: Changed from -pack to cmxa libraries
+2002-11-30 [0.22] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Protocol finished with [] and deepening. Test included.
+	* Console (console_set_font) new parser command
+	* Main: starting to simulate frames
+	* ChangeLog: reversed
+2002-11-29 [0.21] Cezary Kaliszyk, Domin, eLeL <cek@zodiac.mimuw.edu.pl>
+	* eLeL, Net:  cleanup
+	* Domin, Input_edit: history
+	* Protocol: mli
+2002-11-29 [0.20] Cezary Kaliszyk, eLeL <cek@zodiac.mimuw.edu.pl>
+	* General: synchronization & file name cleanup
+	* Makefile: added "make dist" rule to create ../MLGame.tgz, must change nr.
+2002-11-29 [0.19] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Net: tested, it works :)
+	* Protocol: created, badly
+	* Net_buffer: created
+2002-11-28 [0.18] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Input_group: rewritten from scratch
+	* Game: Player is a triple - head, tail and vel
+	* Console: Draws the cursor
+	* General: Some comments & checks, 2 start scripts
+2002-11-27 [0.17] Cezary Kaliszyk, eLeL <cek@zodiac.mimuw.edu.pl>
+	* General: Cleaning
+2002-11-27 [0.16] Cezary Kaliszyk <cek@zodiac.mimuw.edu.pl>
+	* Sprite: Added 'a, groups deleted
+	* Collision: dummy, but ok for snake.
+	* Input_group: created
+	* Game: More than one snake supported, self collision, it is 1.8KB now!
+	* ChangeLog created

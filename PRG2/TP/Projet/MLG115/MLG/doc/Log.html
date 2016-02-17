@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Keys.html">
+<link rel="next" href="Net.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Console" rel="Chapter" href="Console.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Helpers" rel="Chapter" href="Helpers.html">
+<link title="Input" rel="Chapter" href="Input.html">
+<link title="Input_edit" rel="Chapter" href="Input_edit.html">
+<link title="Keys" rel="Chapter" href="Keys.html">
+<link title="Log" rel="Chapter" href="Log.html">
+<link title="Net" rel="Chapter" href="Net.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Protocol" rel="Chapter" href="Protocol.html">
+<link title="Serialize" rel="Chapter" href="Serialize.html">
+<link title="Socket" rel="Chapter" href="Socket.html">
+<link title="Sprite" rel="Chapter" href="Sprite.html">
+<link title="Tcp" rel="Chapter" href="Tcp.html">
+<link title="Udp" rel="Chapter" href="Udp.html">
+<link title="Vector" rel="Chapter" href="Vector.html">
+<link title="Video" rel="Chapter" href="Video.html"><title>Log</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Keys.html" title="Keys">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Net.html" title="Net">Next</a>
+</div>
+<h1>Module <a href="type_Log.html">Log</a></h1>
+
+<pre><span class="keyword">module</span> Log: <code class="code">sig</code> <a href="Log.html">..</a> <code class="code">end</code></pre><div class="info module top">
+Logging info on the console.
+   When console is not available (not in video mode) informations are logged
+   on stderr<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALinfo"><span class="keyword">val</span> info</span> : <code class="type">string -> unit</code></pre><div class="info ">
+Information message<br>
+</div>
+
+<pre><span id="VALerror"><span class="keyword">val</span> error</span> : <code class="type">string -> unit</code></pre><div class="info ">
+Error message<br>
+</div>
+
+<pre><span id="VALdebug"><span class="keyword">val</span> debug</span> : <code class="type">string -> unit</code></pre><div class="info ">
+Debug message<br>
+</div>
+
+<pre><span id="VALfatal"><span class="keyword">val</span> fatal</span> : <code class="type">string -> 'a</code></pre><div class="info ">
+A fatal message. Use it only if the program cannot continue.
+   It uses <code class="code">Pervasives.exit 1</code> to terminate the program with exit code 1.<br>
+</div>
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">unit -> (string * string) list</code></pre><div class="info ">
+<code class="code">get ()</code> is used to get the contents of log.
+   It can be used by a user console<br>
+</div>
+
+<pre><span id="VALremember_debug"><span class="keyword">val</span> remember_debug</span> : <code class="type">bool Pervasives.ref -> string -> unit</code></pre><div class="info ">
+Internal. Logs a debug message that is associated with a variable 
+   that sais if it should be shown on the console<br>
+</div>
+
+<pre><span id="VALdump"><span class="keyword">val</span> dump</span> : <code class="type">string -> unit</code></pre></body></html>

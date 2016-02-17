@@ -1,0 +1,65 @@
+do zrobienia:
+- modu³ monsters - stworek lewo i praworêczny - kierunek poznajê po speed
+  pierwsz± akcj± powinn± byæ by_Action a nie by_step, przy potworkach (które
+  maj± od pocz±tku prêdko¶æ to ma znaczenie
+- domy¶lny element dla planszy - zwracany gdy out of bound
+- elementem gdy brak w pliku - Nothing zamiast Empty
+
+wymy¶lone:
+- jak wychodzisz z teleportu to za¶wieæ go na chwilê.
+
+JEST:
+* F2 zrzuca obraz do pliku level.rob
+  akcja "debug"
+* dobra obs³uga klawiszy: bez przestojów
+  Z tym jest kilka problemów - kiedy zatrzymywaæ Robba?
+  Jak wszystkie klawisze w górze to niema akcji, fire zatrzymuje akcje - trzeba zwolniæ i
+  paln±æ jeszcze raz.
+* strzelanie
+  Metoda create_shot która robi wszystko podaj tylko gdzie i w jak± stronê
+* wybuch
+  Wybuchaj±. Jest jedno ma³e ale:
+  Wybuch niszczy strza³ który lecia³ sobie spokojnie. Strza³ nadal jest na li¶cie aktywnych
+  wiêc wykona siê dla niego next_action i znowy pojawi siê na planszy.
+  Mo¿na dorzuciæ jakie¶ sprawdzanie w Element.next_action czy bziko jest nadal na planszy
+* widok pod±¿a za Robbo p³ynnie
+  Dzia³a spoko, bez jaki¶ super predko¶ci, jak w Atari
+* guma  
+* Teleport - uwaga na teleport stoj±cy przy krawêdzi ekranu - niejawnie zak³adam, ¿e 
+  plansza jest otoczona czym¶...
+* Dzia³ko
+  Mog³oby dostosowywaæ swoj± czêsto¶æ do odleg³o¶æ od najbli¿szego obiektu
+* dane o planszy: ile ¶rubek, kluczy, naboi, ¿yæ, plansza
+  jest - dok³adnie jak w Atari, potrafi siê wypisaæ
+* Robbo mo¿e zgin±æ
+  ginie jak trzeba, mo¿na jeszcze dodaæ wielkie bum przy restarcie - jak w Atari
+* murek ma zbyt intensywn± jasn± barwê - niepotrzebnie odwraca uwagê 
+  poszarzone...
+* Klatki wybuchu - zostaje tyle ile jest, ale koñczy siê nie najs³abszym
+  poprawione - znika po wy¶wietlenieu WSZYSTKICH klatek
+* po zebraniu wszystkich ¶rubek zmieniam kapsu³e
+* po wej¶ciu na dobr± kapsu³ê koniec planszy
+  Wyj±tek Capsule_r.Robbo_indside
+* zliczanie ilo¶æ ¶rubek - metoda Level_image.count
+* Robbo kusi = wielki wybuch wszystkich elementów
+* £Adowanie kolejnych plansz
+* plansza po wczytnaiu mo¿e mieæ ju¿ zero ¶rubek - ok sprawdzam przy Level.get_level
+* klawisz F10 - kucha robocikiem (Die)
+* klawisz F12 - koniec gry (Fail)
+* poleceni next z konsoli - przej¶cie do nast. levelu (Capsule_r.Robbo_inside)
+* konsola nie "zostaje" po schowaniu - nachalnie
+* wyzwalacz dla change video mode wypisuje stosowny komunikat gdy zmieniasz mod
+  na inny ni¿ 800x600
+* fajne przechodzenie planszy - co klatkê znika jedna kolumna
+* element nico¶æ
+* strona tytu³owa - jest png
+* strona koñcowa - jest png
+* pliki .mli dla modu³ów
+* modu³ info z metod± wait image - wy¶wietla rysunek i czeka na spacjê.
+
+
+BAGI:
+- klawisze nie dzia³aj± jak trzeba
+  Trzeba robiæ jaki¶ reset przy zmianie modu. To w zasadzie powinni zrobiæ
+  GieeSowcy
+- konsola nie dzia³a jak trzeba - to dlatego, ¿e nie zawsze j± rysujê!

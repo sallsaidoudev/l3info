@@ -1,0 +1,63 @@
+Exo 1
+1. int = 3
+2. string = "B"
+3. int list = [25; 4; 5]
+4. erreur
+5. erreur
+6. erreur
+
+Exo 2
+1.  let f n = 2*n;;
+    int -> int
+2.  let f x = if x >= 0. then x else -.x;;
+    float -> float
+3.  let f n = n >= 12 && n <= 29;;
+    int -> bool
+4.  let f n = n = 2 || n = 5 || n = 9 || n = 53;;
+    int -> bool
+5.  let f (a, b) = a = 12;;
+    int * 'a -> bool
+6.  let f (a, b) = b;;
+    'a * 'b -> 'b
+7.  let f l = match l with
+    | h::_ -> h
+    | _ -> 9999 ;;
+    int list -> int
+8.  let f l = match l with
+    | h::_ -> (true, h)
+    | _ -> (false, 0) ;;
+    int list -> bool * int
+9.  let f l = match l with
+    | h::t -> (h+1)::t
+    | _ -> [] ;;
+    int list -> int list
+10. let f l = match l with
+    | a::b::_ -> true
+    | _ -> false ;;
+    'a list -> bool
+
+Exo 3
+1.  let inverse_ratio (p, q) = match p with
+	| 0 -> raise Division_by_zero
+	| _ -> (q, p) ;;
+2.  let add_ratio (p1, q1) (p2, q2) = (p1*q2+p2*q1, q1*q2);;
+
+Exo 4
+1.  let f a b = (a/b, a mod b);;
+	int -> int -> int * int
+2.  let quotient_arrondi a b = fst (f a b);;
+	int -> int -> int
+
+Exo 5
+let nb_roots a b c = let d = b*.b -. 4.*.a*.c in
+	if d < 0. then 0
+	else if d = 0. then 1
+	else 2;;
+let roots a b c = let n = nb_roots a b c in
+	if n = 0 then []
+	else if n = 1 then -.b/.2.*.a :: []
+	else let d = b*.b -. 4.*.a*.c in
+		(sqrt(d)-.b)/.2.*.a :: (-.sqrt(d)-.b)/.2.*.a :: [];;
+
+Exo 6
+let quotient_arrondi a b = let q, _ = f a b in q;;

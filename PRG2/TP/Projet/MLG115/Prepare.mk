@@ -1,0 +1,6 @@
+TARGETS+=$(addprefix ${DIR}/,${TARGET})
+FILES:=$(addprefix out/${DIR}/,${FILES})
+CFILES:=$(addprefix out/${DIR}/,${CFILES})
+OFILES:=$(patsubst %,${DIR}/lib/%.o,${OFILES})
+-include $(addsuffix .dm,${FILES})
+-include $(addsuffix .di,${FILES})

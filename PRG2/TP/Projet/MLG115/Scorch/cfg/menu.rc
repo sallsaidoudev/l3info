@@ -1,0 +1,53 @@
+#
+# general form of menu_* command is 
+# command submenu_it_is_in displayed_text arguments
+#
+
+int_var player_cnt 2
+
+menu_command main "quick start" "p2;toggle input_super_mode menu"
+#menu_var main players player_cnt {m_int 1} {}
+
+#menu_command main "" " "
+
+menu_jump main network net
+  menu_command net server server
+  menu_command net "add player" connect
+  menu_command net "start game" start
+menu_jump net back main 
+
+menu_jump main options options
+  menu_var options rounds rounds {m_int 1} {}
+  menu_var options width width {m_int 200} {}
+  menu_var options heigth heigth {m_int 200} {}
+  menu_var options gravity gravity {m_float 0.001} {}
+  menu_var options bumpiness bumpiness {m_int 5} {}
+menu_jump options back main
+
+menu_jump main scoring scoring
+  menu_var scoring kill points_for_kill {m_int 5} {}
+  menu_var scoring win points_for_win {m_int 5} {}
+  menu_var scoring "direct hit" points_for_direct {m_int 1} {}
+  menu_var scoring damage points_for_damage {m_int 1} {}
+menu_jump scoring back main
+
+menu_jump main economic econ
+  menu_var econ multiplier cashing_multiplier {m_int 10} {}
+  menu_var econ "cash at start" cash_at_start {m_int 100} {}
+menu_jump econ back main
+
+menu_jump main video video
+  menu_var video video_mode video_mode {m_none} {m_editable}
+  menu_var video fullscreen fullscreen {m_bool} {} 
+menu_jump video back main
+
+menu_command main quit quit
+
+menu_rebuild
+
+bind_global escape {toggle input_super_mode menu}
+bind_mode up menu {menu_up}
+bind_mode down menu {menu_down}
+bind_mode left menu {menu_left}
+bind_mode right menu {menu_right}
+bind_mode enter menu {menu_ok}

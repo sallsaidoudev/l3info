@@ -1,0 +1,12 @@
+echo "MLGame prepare"
+echo "settings..."
+set debug_parser  false
+set debug_video   false
+set debug_net     false
+set debug_helpers false
+console_set_font "../../Examples/Data/font.png"
+set video_mode "800 600"
+echo "global bindings..."
+bind_global escape {quit}
+bind_global tilde {toggle console_open}
+bind_global sysrq {echo "Don't kill me!"}
