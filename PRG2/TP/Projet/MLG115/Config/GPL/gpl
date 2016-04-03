@@ -1,6 +1,0 @@
-#!/bin/sh
-for i in *.mli *.ml; do
-    mv $i a$i
-    cat header a$i > $i
-    rm a$i
-done

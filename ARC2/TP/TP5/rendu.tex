@@ -1,0 +1,22 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\title{ARC2 -- TP 5}
+\author{Léo Noël-Baron \& Thierry Sampaio}
+\date{02/03/2016}
+
+\input{../../../tex/rap_header}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Recherche dichotomique}
+
+Ce TP vise à implémenter une fonction récursive de recherche dichotomique dans un tableau d'entiers triés en assembleur Nios. Vu le prototype de la fonction, on choisit de passer les arguments dans les registres \verb?r4? à \verb?r7?
+
+L'algorithme proposé nécessite de conserver \verb?tab[pos]? et \verb?pos? dans deux registres afin d'une part, de faire les comparaisons avec la valeur recherchée, et d'autre part, de transmettre les bons arguments au cours des appels récursifs. On fixe pour cela les registres \verb?r16? et \verb?r17? respectivement, qui doivent donc être sauvegardés sur la pile (ainsi que le registre \verb?ra? puisqu'il s'agit d'une fonction récursive).
+
+Après la correction (lente, vu le temps de compilation de ce programme) de quelques étourderies, le programme fonctionne.
+
+\end{document}

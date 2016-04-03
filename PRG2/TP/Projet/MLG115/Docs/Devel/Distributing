@@ -1,9 +1,0 @@
-DISTRIBUTING GAME BINARIES:
-
- - Linux, *BSD: ./configure --enable-all-static; make
- - BeOS: include SDL.so SDL_image.so SDL_ttf.so freetype2.so smpeg.so
- - MSVC: include SDL.dll SDL_image.dll jpeg.dll libpng1.dll zlib.dll
- - Cygwin: include 
-     SDL.dll SDL_image.dll cygjpeg6b.dll cygpng12.dll cygwin1.dll cygz.dll
-
-REMEMBER ABOUT THE LICENSE! (include README-SDL)

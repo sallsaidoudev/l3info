@@ -1,6 +1,0 @@
-set uses force_set instead of try_set. necessary? I use Parser.parse
-problem with disconnectem, I'm doing it wrong.
-frameskip?
-More variable features, automatic writing
-internal_commands
-disconnect_all

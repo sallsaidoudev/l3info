@@ -1,0 +1,30 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\title{ARC2 -- TP 4}
+\author{Léo Noël-Baron \& Thierry Sampaio}
+\date{24/02/2016}
+
+\input{../../../tex/rap_header}
+
+\begin{document}
+
+\maketitle
+
+Ce TP propose d'implémenter quelques fonctions de manipulation de tableaux en assembleur Nios. Les trois fonctions demandées ayant le même prototype, on passera les arguments par les registres \verb?r4? et \verb?r5? et les valeurs de retour par le registre \verb?r2?.
+
+\subsection*{Lecture d'un tableau}
+
+Pour gérer la boucle de lecture, on choisit d'utiliser un registre comme pointeur vers la case courante du tableau, et un autre pour matérialiser la variable \verb?i? du code proposé. Les détails d'implémentation sont fournis en commentaire du listing assembleur.
+
+\subsection*{Ecriture d'un tableau}
+
+La fonction d'écriture est presque similaire à la précédente. Une fois les deux implémentées sur le même schéma (et après quelques difficultés techniques ainsi que dans la gestion du pointeur de case), le programme s'exécute et affiche bien un tableau identique à celui entré au clavier.
+
+\subsection*{Inversion de tableau}
+
+La fonction d'inversion est un peu plus complexe et nécessite plus de registres (faute de temps, leur sauvegarde dans la pile n'a pas été prévue). On choisit de réserver deux registres pour pointer vers \verb?tab[i]? et \verb?tab[j]?, deux autres pour matérialiser les compteurs et on s'aperçoit que deux autres sont nécessaires pour gérer l'échange de valeurs (une implémentation plus astucieuse est sans doute envisageable).
+
+Malgré cette implémentation un peu précipitée, le programme fonctionne correctement.
+
+\end{document}

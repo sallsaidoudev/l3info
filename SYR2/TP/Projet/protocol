@@ -1,0 +1,53 @@
+GET[filename]
+ERR
+FND[srate][ssize][chans]
+PLS[sno]
+SMP[sno][audiolen][data]
+EOF
+QUT
+
+
+SERVER
+
+while (1) {
+	recv(msg, from)
+	if (id = get_id_or_add(from)) < 0
+		send(FUL)
+		continue
+	process(msg, id)
+	send(msg, from)
+}
+
+while (1) {
+	recv(GET file)
+	if (!file exists) {
+		send(ERR)
+		continue
+	} else {
+		send(FND data)
+	}
+	while (file) {
+		recv(PLS n°)
+		send(SMP n° sample)
+	}
+	recv(ACK n+1)
+	send(EOF)
+}
+
+
+CLIENT
+
+send(GET file)
+recv()
+if (ERR)
+	fin
+open audio data
+while(1) {
+	send(PLS n°)
+	recv(SMP n° sample)
+	if (EOF)
+		break
+	if timeout
+		continue
+	play(sample)
+}

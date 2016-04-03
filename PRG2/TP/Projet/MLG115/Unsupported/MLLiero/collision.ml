@@ -1,1 +1,0 @@
-type collision_kind = Player | Fixed_Object;;

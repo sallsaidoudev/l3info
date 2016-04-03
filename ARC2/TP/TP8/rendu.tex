@@ -1,0 +1,147 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\title{ARC2 -- TP 8}
+\author{Prune Forget, Léo Noël-Baron \& Thierry Sampaio}
+\date{23/03/2016}
+
+\input{../../../tex/rap_header}
+
+\begin{document}
+
+\maketitle
+
+Ce TP propose d'utiliser les mécanismes d'interruption du Nios pour gérer des événements matériels (ici une souris et une animation à l'écran).
+
+\subsection*{Activation des interruptions}
+
+On commence par implémenter les fonctions d'activation :
+\begin{lstlisting}[language=C]
+void activer_interruptions() {
+	unsigned int tmp;
+	NIOS2_READ_STATUS(tmp);
+	tmp |= 1; // Mettre le bit 0 de STATUS à 1
+	NIOS2_WRITE_STATUS(tmp);
+}\end{lstlisting}
+\begin{lstlisting}[language=C]
+void activer_interruption(int num) {
+	unsigned int tmp;
+	NIOS2_READ_IENABLE(tmp);
+	tmp |= (1 << num); // Mettre le bit num de IENABLE à 1
+	NIOS2_WRITE_IENABLE(tmp);
+}\end{lstlisting}
+et on appelle la première au début du \verb?main?.
+
+\subsection*{Contrôle de l'animation}
+
+Pour gérer l'animation à l'écran, on doit lancer le timer en mode continu soit, d'après l'énoncé, \verb?0111? ce qui donne \verb?*TIMER_CTRL = 7? dans le \verb?main?. On doit ensuite appeler \verb?activer_interruption(INTERVAL_TIMER_IRQ)? pour activer l'interruption du timer. Enfin, il faut implémenter la routine d'interruption :
+\begin{lstlisting}[language=C]
+static void TIMER_ISR(void *context, alt_u32 id) {
+	tick();
+	*TIMER_STATUS = 0;
+}\end{lstlisting}
+et ô miracle, les nuages défilent.
+
+\subsection*{Contrôle de la souris}
+
+Pour gérer la souris, il faut d'abord activer l'interruption correspondante dans le \verb?main? puis écrire la routine suivante :
+\begin{lstlisting}[language=C]
+char pnext = 0, p[3];
+static void MOUSE_ISR(void *context, alt_u32 id)  {
+	p[pnext] = (*PS2_DATA) & 0xFF; // Récupérer un octet de données
+	if(++pnext == 3) { // Si on a eu les deux déplacements
+		x_pos = MOD(x_pos + p[1], 320);
+		y_pos = MOD(y_pos - p[2], 240);
+		pnext = 0; // RAZ
+	}
+}\end{lstlisting}
+qui lit les octets de données de la souris un à un et met à jour la position du curseur quand il le faut. Et ô joie, le canari vole.
+
+\newpage
+\subsection*{main.c}
+\begin{lstlisting}[language=C]
+#include "nios2.h"
+#include "system.h"
+#include "sys/alt_irq.h"
+#include "init.h"
+
+#include "graphlib.h"
+#include "cursor.h"
+#include "nuages.h"
+
+#define MOD(a,b) ((a)%(b)+(b))%(b)
+
+volatile unsigned int* TIMER_STATUS = (unsigned int *) INTERVAL_TIMER_BASE;
+volatile unsigned int* TIMER_CTRL = (unsigned int *) (INTERVAL_TIMER_BASE + 4);
+volatile unsigned int* PS2_DATA = (unsigned int *) PS2_PORT_BASE;
+
+// Question 1.1
+void activer_interruptions() {
+	unsigned int tmp;
+	NIOS2_READ_STATUS(tmp);
+	tmp |= 1;
+	NIOS2_WRITE_STATUS(tmp);
+}
+
+// Question 1.2
+void activer_interruption(int num) {
+	unsigned int tmp;
+	NIOS2_READ_IENABLE(tmp);
+	tmp |= (1 << num);
+	NIOS2_WRITE_IENABLE(tmp);
+}
+
+int x_pos = 100, y_pos = 100;
+char pnext = 0, p[3];
+int middle_pos = 0;
+
+void tick() {
+	middle_pos = MOD(middle_pos - 1, 320);
+}
+
+// Question 3
+static void TIMER_ISR(void *context, alt_u32 id) {
+	tick();
+	*TIMER_STATUS = 0;
+}
+
+// Question 4.2
+static void MOUSE_ISR(void *context, alt_u32 id)  {
+	p[pnext] = (*PS2_DATA) & 0xFF;
+	if(++pnext == 3) {
+		x_pos = MOD(x_pos + p[1], 320);
+		y_pos = MOD(y_pos - p[2], 240);
+		pnext = 0;
+	}
+}
+
+int main() {
+	init();
+	
+	// Question 1.3
+	activer_interruptions();
+	
+	// Question 2.2
+	*TIMER_CTRL = 7;
+	
+	// Question 2.3
+	activer_interruption(INTERVAL_TIMER_IRQ);
+	
+	// Question 4.1
+	activer_interruption(PS2_PORT_IRQ);
+	
+	// Enregistrement des routines d'interruption.
+	alt_irq_register ( INTERVAL_TIMER_IRQ, 0, TIMER_ISR );
+	alt_irq_register( PS2_PORT_IRQ, 0, MOUSE_ISR );
+	
+	while(1) {
+		clear_screen();
+		draw_image((unsigned short *)nuages_img, 320, 240, middle_pos-320, 0);
+		draw_image((unsigned short *)nuages_img, 320, 240, middle_pos, 0);
+		draw_piou(x_pos, y_pos);
+		swap_buffers();
+	}
+}
+\end{lstlisting}
+
+\end{document}

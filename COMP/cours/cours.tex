@@ -257,4 +257,8 @@ Le code objet doit en outre fournir un tableau \verb?po? dans lequel sont rangé
 
 Les instructions \verb?si?, \verb?ttq? et \verb?cond? nécessitent des branchements \og en avant\fg\ (à des adresses inconnues au moment où on fait le branchement BINCOND ou BSIFAUX) ; il faut mémoriser des emplacements du code objet (indices de \verb?po?) et gérer l'imbrication de ces instructions, au moyen d'une pile nommée \verb?pileRep?.
 
+\subsection{Les procédures}
+
+Jusqu'ici toute les variables sont globales ; l'introduction des procédures ajoute des variables locales et des paramètres, fixes ou modifiables. Le traitement des variables globales ne change pas. Quand aux variables locales et aux paramètres, leur adresse dans la pile d'exécution dépend de l'emplacement où commence l'exécution de l'appel de procédure correspondant (dans l'ordre : paramètres, données de liaison puis variables locales). \`A cet effet sont introduites les instructions Mapile \verb?affecterl? et \verb?contenul?, \verb?empileradg? et \verb?empileradl?. Sinon y'a aussi \verb?appel? et \verb?retour?.
+
 \end{document}
